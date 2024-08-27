@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities {
+    .main_background {
+        background: url('/assets/images/signupimage.jpg');
+        min-height: 100vh;
+        align-items: center;
+        font-family: 'Inter', sans-serif;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* .main_background::before {
+        width: 100%;
+        content: '';
+        position: absolute;
+        inset: 0;
+        backdrop-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.5);
+    } */
+}
