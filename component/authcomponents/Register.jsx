@@ -11,62 +11,84 @@ import {
 } from "@tabler/icons-react";
 
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "@app/firebase/config";
-import { setDoc, doc } from "firebase/firestore";
+import Link from "next/link";
 import { toast } from "react-toastify";
-import useDataContext from "@component/hooks/useDataContext";
+import Image from "next/image";
+import CountrySelect from "./components/CountrySelect";
 
 export function Register() {
-  const { setUser } = useDataContext();
-
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted");
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      setUser(user);
-      console.log(user);
-      if (user) {
-        await setDoc(doc(db, "users", user.uid), {
-          email: user.email,
-          firstName: firstName,
-          lastName: lastName,
-          username: username,
-          roles: [2001],
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          username,
+          firstname: firstName,
+          lastname: lastName,
+          password,
+          phoneNumber,
+          country: selectedCountry,
+        }),
+      });
+      const data = await response.json();
+      console.log(data, response);
+
+      if (response.ok) {
+        await fetch("/api/mails/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+          }),
+        });
+
+        toast.success("user registered", {
+          position: "top-center",
         });
       }
-      console.log("user registered successfully");
-      toast.success("user registered successfully", {
-        position: "top-center",
-      });
-      // setTimeout(() => {
-      //   navigate("/profile");
-      // }, 3000);
-      setEmail("");
-      setPassword("");
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
       toast.error(error.message, {
-        position: "bottom-center",
+        position: "top-center",
       });
     }
   };
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Welcome to start investment
-      </h2>
-      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login to start invextment app to access your dashboard
+    <div
+      className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black "
+      style={{}}
+    >
+      <div
+        className="mx-auto w-full"
+        style={{
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Image
+          src={"/assets/logo/logo.png"}
+          alt="logo"
+          width={80}
+          height={80}
+          className="mx-auto"
+        />
+      </div>
+      <p className="text-neutral-600 text-center font-semibold max-w-sm mt-2 dark:text-neutral-300">
+        Sign up for an Infinite firms account
       </p>
       <form className="my-8" onSubmit={handleSubmit}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
@@ -74,7 +96,7 @@ export function Register() {
             <Label htmlFor="firstname">First name</Label>
             <Input
               id="firstname"
-              placeholder="Tyler"
+              placeholder="John"
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -85,7 +107,7 @@ export function Register() {
             <Label htmlFor="lastname">Last name</Label>
             <Input
               id="lastname"
-              placeholder="Durden"
+              placeholder="Doe"
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
@@ -93,6 +115,26 @@ export function Register() {
             />
           </LabelInputContainer>
         </div>
+        <LabelInputContainer>
+          <Label htmlFor="phonenumber">
+            Phone number <small>(include country code)</small>
+          </Label>
+          <Input
+            id="phonenumber"
+            placeholder="+1 (234)-567-890"
+            type="text"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            required
+          />
+        </LabelInputContainer>
+        <LabelInputContainer>
+          <Label htmlFor="lastname">Select Country</Label>
+          <CountrySelect
+            selectedCountry={selectedCountry}
+            setSelectedCountry={setSelectedCountry}
+          />
+        </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="username">Username</Label>
           <Input
@@ -108,7 +150,7 @@ export function Register() {
           <Label htmlFor="email">Email Address</Label>
           <Input
             id="email"
-            placeholder="projectmayhem@fc.com"
+            placeholder="email@email.com"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -134,41 +176,23 @@ export function Register() {
           Sign up &rarr;
           <BottomGradient />
         </button>
+        <div className="mt-2 float-right text-left">
+          <Link
+            href={"/user-login"}
+            className="text-gray-400 float-right text-left w-full"
+            style={{
+              textDecoration: "underline",
+              color: "#3182CE",
+            }}
+          >
+            Already registered?
+            <span className="underline font-bold text-indigo-400 ml-2">
+              Login to your Account
+            </span>
+          </Link>
+        </div>
 
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
-
-        <div className="flex flex-col space-y-4">
-          <button
-            className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-            type="submit"
-          >
-            <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              GitHub
-            </span>
-            <BottomGradient />
-          </button>
-          <button
-            className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-            type="submit"
-          >
-            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              Google
-            </span>
-            <BottomGradient />
-          </button>
-          <button
-            className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-            type="submit"
-          >
-            <IconBrandOnlyfans className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              OnlyFans
-            </span>
-            <BottomGradient />
-          </button>
-        </div>
       </form>
     </div>
   );

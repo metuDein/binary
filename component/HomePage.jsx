@@ -1,105 +1,56 @@
 "use client";
 import React from "react";
-import { HeroParallax } from "@components/ui/hero-parallax";
+import AboutUs from "./homepagecomponents/homepageItem/AboutUs";
+import Welcome from "./homepagecomponents/homepageItem/Welcome";
+import InvestmentPlans from "./homepagecomponents/plans/InvestmentPlans";
+import Testimonials from "./homepagecomponents/testimonials/Testimonials";
+import GlobalAccess from "./homepagecomponents/global/GlobalAccess";
+import JoinNow from "./homepagecomponents/joinnow/JoinNow";
+import WhyChooseUs from "./homepagecomponents/Choose/WhyChooseUs";
+import Services from "./homepagecomponents/services/Services";
 
 const HomePage = () => {
-  return <HeroParallax products={products} />;
+  return (
+    <main className="w-full min-h-screen">
+      <section className="w-full min-h-screen">
+        <Welcome />
+      </section>
+
+      <section className="min-h-screen bg-gray-300">
+        <AboutUs />
+      </section>
+      <section className="min-h-screen">
+        <h2 className="text-center text-black text-4xl font-sans font-bold mb-3 underline-offset-0">
+          {" "}
+          The perfect plans just for you{" "}
+        </h2>
+        <Services />
+      </section>
+      <section className="min-h-screen w-full">
+        <h2 className="text-center text-black text-4xl font-sans font-bold mb-3 underline">
+          {" "}
+          The perfect plans just for you{" "}
+        </h2>
+        <InvestmentPlans />
+      </section>
+      <section className="">
+        <GlobalAccess />
+      </section>
+      <section className="min-h-[50vh]">
+        <JoinNow />
+      </section>
+      <section className="min-h-screen bg-black">
+        <Testimonials />
+      </section>
+      <section className="pt-4 pb-6 border-t-black border-solid ">
+        <h2 className="text-center pt-3 pb-6 text-black text-4xl font-sans font-bold mb-3 underline-offset-0">
+          {" "}
+          Why Invest With Infinite Firms?{" "}
+        </h2>
+        <WhyChooseUs />
+      </section>
+    </main>
+  );
 };
-
-export const products = [
-  {
-    title: "Moonbeam",
-    link: "https://gomoonbeam.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/moonbeam.png",
-  },
-  {
-    title: "Cursor",
-    link: "https://cursor.so",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cursor.png",
-  },
-  {
-    title: "Rogue",
-    link: "https://userogue.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/rogue.png",
-  },
-
-  {
-    title: "Editorially",
-    link: "https://editorially.org",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editorially.png",
-  },
-  {
-    title: "Editrix AI",
-    link: "https://editrix.ai",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editrix.png",
-  },
-  {
-    title: "Pixel Perfect",
-    link: "https://app.pixelperfect.quest",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/pixelperfect.png",
-  },
-
-  {
-    title: "Algochurn",
-    link: "https://algochurn.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/algochurn.png",
-  },
-  {
-    title: "Aceternity UI",
-    link: "https://ui.aceternity.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/aceternityui.png",
-  },
-  {
-    title: "Tailwind Master Kit",
-    link: "https://tailwindmasterkit.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png",
-  },
-  {
-    title: "SmartBridge",
-    link: "https://smartbridgetech.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/smartbridge.png",
-  },
-  {
-    title: "Renderwork Studio",
-    link: "https://renderwork.studio",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/renderwork.png",
-  },
-
-  {
-    title: "Creme Digital",
-    link: "https://cremedigital.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cremedigital.png",
-  },
-  {
-    title: "Golden Bells Academy",
-    link: "https://goldenbellsacademy.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/goldenbellsacademy.png",
-  },
-  {
-    title: "Invoker Labs",
-    link: "https://invoker.lol",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/invoker.png",
-  },
-  {
-    title: "E Free Invoice",
-    link: "https://efreeinvoice.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png",
-  },
-];
 
 export default HomePage;

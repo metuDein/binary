@@ -1,9 +1,10 @@
 "use client";
-
 import React, { useEffect, useRef } from "react";
+import { getSession } from "next-auth/react";
 
-const TradingViewWidget = () => {
+const TradingViewWidget = async () => {
   const widgetRef = useRef(null);
+  const session = getSession();
 
   useEffect(() => {
     if (widgetRef.current && widgetRef.current.childElementCount === 0) {
@@ -30,22 +31,7 @@ const TradingViewWidget = () => {
   }, []);
 
   return (
-    <div className="tradingview-widget-container">
-      <div
-        ref={widgetRef}
-        className="tradingview-widget-container__widget"
-      ></div>
-      {/* <div className="tradingview-widget-copyright text-center mt-2">
-        <a
-          href="https://www.tradingview.com/"
-          target="_blank"
-          rel="noreferrer"
-          className="text-blue-500"
-        >
-          Track all markets on TradingView
-        </a> 
-      </div>*/}
-    </div>
+    <>{session && <div ref={widgetRef} className="tradingview-widget"></div>}</>
   );
 };
 

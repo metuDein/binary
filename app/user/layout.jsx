@@ -1,29 +1,10 @@
-"use client";
-import { useRouter } from "next/navigation";
-
-const Nav = () => {
-  return (
-    <div>
-      <nav>Siderbar</nav>
-    </div>
-  );
-};
-const Footer = () => {
-  return (
-    <div>
-      <nav>
-        <footer> footer</footer>
-      </nav>
-    </div>
-  );
-};
+import SideBar from "@component/navbarandfooter/SideBar";
 
 const UserLayout = ({ children }) => {
   return (
     <>
-      <Nav />
-      {children}
-      <Footer />
+      <SideBar />
+      <main className="w-full min-h-screen">{children}</main>
     </>
   );
 };
