@@ -194,6 +194,9 @@ export const Card = ({ card, index, layout = false }) => {
               <button
                 className="sticky top-4 h-8 w-8 right-0 ml-auto bg-black dark:bg-white rounded-full flex items-center justify-center"
                 onClick={handleClose}
+                style={{
+                  marginTop: "100px",
+                }}
               >
                 <IconX className="h-6 w-6 text-neutral-100 dark:text-neutral-900" />
               </button>

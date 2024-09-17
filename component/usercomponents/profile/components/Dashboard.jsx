@@ -3,7 +3,7 @@ import React from "react";
 import TradingViewMiniChartWidget from "@component/tradingviewwidget/TradingViewMiniChartWidget";
 import { useDataContext } from "@component/context/DataProvider";
 
-const Dashboard = ({ userdata }) => {
+const Dashboard = () => {
   const { currentUser, btcRate, ethRate, ltcRate, xmrRate, xrpRate, zecRate } =
     useDataContext();
 
@@ -14,7 +14,7 @@ const Dashboard = ({ userdata }) => {
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
           <h3 className="text-xl font-semibold">Profit Balance</h3>
           <p className="text-3xl font-bold mt-4">
-            ${currentUser?.balances?.profit}
+            ${currentUser && currentUser?.balances?.profit}
           </p>
         </div>
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
@@ -24,7 +24,7 @@ const Dashboard = ({ userdata }) => {
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
           <h3 className="text-xl font-semibold">Deposit Balance</h3>
           <p className="text-3xl font-bold mt-4">
-            ${currentUser?.balances?.deposit}
+            ${currentUser && currentUser?.balances?.deposit}
           </p>
         </div>
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">

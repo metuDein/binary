@@ -136,46 +136,102 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-4">
-              <Link href="/">Home</Link>
-              <Link href="/faq/aboutus">About</Link>
-              <Link href="/faq/services">Services</Link>
-              <Link href="/faq/contact">Contact</Link>
-              <Link href="/user-register">Register</Link>
-              <Link href="/user-login">Login</Link>
-            </div>
+            {!session && (
+              <div className="hidden md:flex space-x-4">
+                <Link href="/">Home</Link>
+                <Link href="/faq/aboutus">About</Link>
+                <Link href="/faq/services">Services</Link>
+                <Link href="/faq/contact">Contact</Link>
+                <Link href="/user-register">Register</Link>
+                <Link href="/user-login">Login</Link>
+              </div>
+            )}
+            {session && (
+              <div className="hidden md:flex space-x-4">
+                <Link href={"/user/profile"}>{currentUser?.firstname}</Link>
+                <button>
+                  <FontAwesomeIcon icon={faBell} />
+                </button>
+              </div>
+            )}
 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex justify-center items-center gap-2">
               {!!session && (
                 <button>
                   <FontAwesomeIcon icon={faBell} />
-                  <span
-                    className=" rounded-full"
-                    style={{
-                      color: "#22c55e",
-                      padding: "1px",
-                    }}
-                  >
-                    3
-                  </span>
                 </button>
               )}
 
-              {!!session && (
-                <button
-                  onClick={toggleMenu}
-                  type="button"
-                  className="text-gray-400 hover:text-white focus:outline-none focus:text-white"
-                >
-                  <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
-                </button>
-              )}
+              <button
+                onClick={toggleMenu}
+                type="button"
+                className="text-gray-400 hover:text-white focus:outline-none focus:text-white"
+              >
+                <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
+              </button>
             </div>
           </div>
         </div>
 
         {/* Mobile Menu */}
+        {isOpen && !session && (
+          <div className="md:hidden">
+            <div className="flex flex-col px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center mt-2 rounded h-screen">
+              <Link
+                href="/"
+                className="rounded font-semibold text-right flex items-center justify-center gap-1 "
+                style={{
+                  padding: "10px 0",
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                <IconHome className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
+                Home
+              </Link>
+              <Link
+                href="/faq/aboutus"
+                className="rounded font-semibold text-right flex items-center justify-center gap-1"
+                style={{
+                  padding: "10px 0",
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                About Us
+              </Link>
+              <Link
+                href="/faq/services"
+                className="rounded font-semibold text-right flex items-center justify-center gap-1"
+                style={{
+                  padding: "10px 0",
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                Services
+              </Link>
+              <Link
+                href="/user-register"
+                className="rounded font-semibold text-right flex items-center justify-center gap-1"
+                style={{
+                  padding: "10px 0",
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                Register
+              </Link>
+              <Link
+                href="/user-login"
+                className="rounded font-semibold text-right flex items-center justify-center gap-1"
+                style={{
+                  padding: "10px 0",
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                Login
+              </Link>
+            </div>
+          </div>
+        )}
         {isOpen && !!session && (
           <div className="md:hidden">
             <div className="flex flex-col px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center mt-2 rounded h-screen">

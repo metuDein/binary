@@ -17,32 +17,6 @@ const Profile = () => {
     (tx) => tx.userId?._id === currentUser?._id
   );
 
-  const userData = {
-    email: "user@example.com",
-    username: "user123",
-    firstname: "John",
-    lastname: "Doe",
-    roles: { User: 2001 },
-    balances: {
-      profit: 100,
-      expectedTrading: 500,
-      expectedMining: 300,
-      trading: 200,
-      mining: 150,
-      deposit: 1000,
-      bonus: 50,
-      bitcoin: 0.5,
-      ethereum: 1.2,
-      litecoin: 2.0,
-      monero: 3.0,
-      ripple: 1000,
-      zcash: 0.3,
-    },
-    accountType: { starter: true, bronze: false, silver: false, gold: false },
-    phoneNumber: "123-456-7890",
-    location: "New York, USA",
-  };
-
   return (
     <main className="w-full min-h-screen">
       <section
@@ -59,7 +33,7 @@ const Profile = () => {
         >
           Dashboard
         </h2> */}
-        <Dashboard userData={userData} />
+        <Dashboard />
       </section>
       <section className="">
         <h3 className="text-xl font-bold text-center text-black underline my-3">

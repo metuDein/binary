@@ -18,8 +18,6 @@ import { useDataContext } from "@component/context/DataProvider";
 
 const SideBar = () => {
   const { currentUser } = useDataContext();
-  const { roles } = currentUser;
-  const [admin, setAdmin] = useState(true);
 
   const handleLogout = async () => {
     try {

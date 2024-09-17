@@ -4,11 +4,7 @@ import React from "react";
 import { Label } from "@components/ui/label";
 import { Input } from "@components/ui/input";
 import { cn } from "@/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-  IconBrandOnlyfans,
-} from "@tabler/icons-react";
+import { useDataContext } from "@component/context/DataProvider";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -21,6 +17,7 @@ import { toast } from "react-toastify";
 export function Login() {
   const router = useRouter();
   // const session = await getServerSession();
+  const { getUser } = useDataContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,6 +32,7 @@ export function Login() {
     });
 
     if (response.ok) {
+      await getUser();
       router.push("/user/profile");
       router.refresh();
       toast.success("Logged in successfully!");

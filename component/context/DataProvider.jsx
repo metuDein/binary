@@ -37,7 +37,11 @@ export const DataProvider = ({ children }) => {
       const response = await fetch("/api/auth/getcurrentuser");
       const data = await response.json();
       console.log(data);
-      setCurrentUser(data.user);
+      if (response.ok) {
+        setCurrentUser(data.user);
+      } else {
+        setCurrentUser(null);
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -144,6 +148,7 @@ export const DataProvider = ({ children }) => {
         xmrRate,
         xrpRate,
         zecRate,
+        getUser,
       }}
     >
       {children}
