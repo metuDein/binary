@@ -33,9 +33,11 @@ export function Login() {
 
     if (response.ok) {
       await getUser();
-      router.push("/user/profile");
-      router.refresh();
-      toast.success("Logged in successfully!");
+      setTimeout(() => {
+        router.push("/user/profile");
+        toast.success("Logged in successfully!");
+        router.refresh();
+      }, 2000);
     }
 
     console.log({ response });
