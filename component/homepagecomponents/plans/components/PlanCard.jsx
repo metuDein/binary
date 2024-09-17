@@ -1,26 +1,15 @@
 "use client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 const PlanCard = ({ name, price, features }) => {
   const planFeatures = () => {
     return features.map((feature, index) => (
-      <div key={index} class="flex items-start justify-start gap-2 my-4">
-        <div class="h-4 w-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-neutral-200">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="tabler-icon tabler-icon-check h-3 w-3 [stroke-width:4px] text-gray-200"
-          >
-            <path d="M5 12l5 5l10 -10"></path>
-          </svg>
+      <div key={index} className="flex items-start justify-start gap-2 my-4">
+        <div className="h-4 w-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ">
+          <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#fff" }} />
         </div>
-        <div class="font-medium text-black text-sm dark:text-white">
+        <div className="font-medium text-black text-sm dark:text-white">
           {feature}
         </div>
       </div>
@@ -43,24 +32,11 @@ const PlanCard = ({ name, price, features }) => {
       <div className="mt-4">
         {planFeatures()}
 
-        <div class="flex items-start justify-start gap-2 my-4">
-          <div class="h-4 w-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-neutral-200">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="tabler-icon tabler-icon-check h-3 w-3 [stroke-width:4px] text-blue-300"
-            >
-              <path d="M5 12l5 5l10 -10"></path>
-            </svg>
+        <div className="flex items-start justify-start gap-2 my-4">
+          <div className="h-4 w-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ">
+            <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#fff" }} />
           </div>
-          <div class="font-medium text-black text-sm dark:text-white">
+          <div className="font-medium text-black text-sm dark:text-white">
             24/7 Support Available
           </div>
         </div>

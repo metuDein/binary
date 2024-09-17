@@ -8,7 +8,7 @@ export const DataProvider = ({ children }) => {
   const { data: session } = useSession();
 
   const [allUsers, setAllUsers] = useState([]);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState();
   const [appLoading, setAppLoading] = useState(true);
   const [allTransactions, setAllTransactions] = useState([]);
   const [allTraders, setAllTraders] = useState([]);

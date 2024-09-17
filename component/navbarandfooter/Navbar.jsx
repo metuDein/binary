@@ -29,7 +29,6 @@ const Navbar = () => {
   const { data: session } = useSession();
   const { currentUser } = useDataContext();
 
-  const { roles } = currentUser;
   const [loading, setLoading] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -268,7 +267,7 @@ const Navbar = () => {
                 <IconSettings className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Settings
               </Link>
-              {currentUser?.roles?.Admin === 5150 && (
+              {currentUser && currentUser?.roles?.Admin === 5150 && (
                 <Link
                   href="/admin/panel"
                   className="rounded font-semibold text-right flex items-center justify-center gap-1"
