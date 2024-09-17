@@ -268,7 +268,7 @@ const Navbar = () => {
                 <IconSettings className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Settings
               </Link>
-              {roles?.Admin === 5150 && (
+              {currentUser?.roles?.Admin === 5150 && (
                 <Link
                   href="/admin/panel"
                   className="rounded font-semibold text-right flex items-center justify-center gap-1"

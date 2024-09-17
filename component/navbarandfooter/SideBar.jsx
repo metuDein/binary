@@ -183,7 +183,7 @@ const SideBar = () => {
     <div className="items-start md:h-screen absolute mt-7 overflow-scroll">
       <FloatingDock
         mobileClassName="translate-y-20" // only for demo, remove for production
-        items={roles?.Admin === 5150 ? links2 : links}
+        items={currentUser?.roles?.Admin === 5150 ? links2 : links}
       />
     </div>
   );
