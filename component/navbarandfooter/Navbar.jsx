@@ -19,9 +19,17 @@ import {
   IconLogout,
   IconAdjustmentsCog,
 } from "@tabler/icons-react";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import TradingViewWidget from "@component/tradingviewwidget/TradingViewWidget";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useDataContext } from "@component/context/DataProvider";
 
 const Navbar = () => {
-  const session = getServerSession();
+  const { data: session } = useSession();
+  const { currentUser } = useDataContext();
+
+  const { roles } = currentUser;
   const [loading, setLoading] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -91,6 +99,16 @@ const Navbar = () => {
     );
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      setIsOpen(false);
+      console.log("user logged out");
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return (
     <header className=" bg-black w-full fixed  z-[1000]">
       <nav className="bg-gray-900 text-white">
@@ -101,70 +119,65 @@ const Navbar = () => {
               <Link href={"/"} className="flex items-center">
                 <Image
                   className="w-[4rem]"
-                  src="/assets/logo/logo.png"
+                  src="/assets/logo/horizon.png"
                   alt="Logo"
                   width={60}
                   height={60}
                 />
 
-                <span className="ml-1 text-xl font-bold md:block hidden">
-                  Infinite firms
+                <span
+                  className="ml-1 text-xl font-bold md:block hidden"
+                  style={{
+                    color: "#497fc5",
+                  }}
+                >
+                  Horizonmarketcapital
                 </span>
               </Link>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-4">
-              <Link href="/about">About</Link>
-              <Link href="/services">Services</Link>
-              <Link href="/contact">Contact</Link>
+              <Link href="/">Home</Link>
+              <Link href="/faq/aboutus">About</Link>
+              <Link href="/faq/services">Services</Link>
+              <Link href="/faq/contact">Contact</Link>
+              <Link href="/user-register">Register</Link>
+              <Link href="/user-login">Login</Link>
             </div>
 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex justify-center items-center gap-2">
-              <button>
-                <FontAwesomeIcon icon={faBell} />
-                <span
-                  className=" rounded-full"
-                  style={{
-                    color: "#22c55e",
-                    padding: "1px",
-                  }}
-                >
-                  3
-                </span>
-              </button>
+              {!!session && (
+                <button>
+                  <FontAwesomeIcon icon={faBell} />
+                  <span
+                    className=" rounded-full"
+                    style={{
+                      color: "#22c55e",
+                      padding: "1px",
+                    }}
+                  >
+                    3
+                  </span>
+                </button>
+              )}
 
-              <button
-                onClick={toggleMenu}
-                type="button"
-                className="text-gray-400 hover:text-white focus:outline-none focus:text-white"
-              >
-                <svg
-                  className="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              {!!session && (
+                <button
+                  onClick={toggleMenu}
+                  type="button"
+                  className="text-gray-400 hover:text-white focus:outline-none focus:text-white"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d={
-                      isOpen
-                        ? "M6 18L18 6M6 6l12 12"
-                        : "M4 6h16M4 12h16M4 18h16"
-                    }
-                  />
-                </svg>
-              </button>
+                  <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
+                </button>
+              )}
             </div>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && session && (
+        {isOpen && !!session && (
           <div className="md:hidden">
             <div className="flex flex-col px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center mt-2 rounded h-screen">
               <Link
@@ -173,6 +186,7 @@ const Navbar = () => {
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={() => setIsOpen(false)}
               >
                 <IconHome className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Dashboard
@@ -183,6 +197,7 @@ const Navbar = () => {
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={() => setIsOpen(false)}
               >
                 <IconChartAreaLine className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Mining
@@ -193,6 +208,7 @@ const Navbar = () => {
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={() => setIsOpen(false)}
               >
                 <IconUserHexagon className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Traders
@@ -203,6 +219,7 @@ const Navbar = () => {
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={() => setIsOpen(false)}
               >
                 <IconHistoryToggle className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 History
@@ -213,6 +230,7 @@ const Navbar = () => {
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={() => setIsOpen(false)}
               >
                 <IconPackageImport className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Deposit
@@ -223,6 +241,7 @@ const Navbar = () => {
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={() => setIsOpen(false)}
               >
                 <IconCashBanknote className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Withdrawal
@@ -233,6 +252,7 @@ const Navbar = () => {
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={() => setIsOpen(false)}
               >
                 <IconGauge className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Upgrade
@@ -243,24 +263,40 @@ const Navbar = () => {
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={() => setIsOpen(false)}
               >
                 <IconSettings className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
                 Settings
               </Link>
-              <Link
+              {roles?.Admin === 5150 && (
+                <Link
+                  href="/admin/panel"
+                  className="rounded font-semibold text-right flex items-center justify-center gap-1"
+                  style={{
+                    padding: "10px 0",
+                  }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <IconAdjustmentsCog className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
+                  Admin Panel
+                </Link>
+              )}
+              <button
                 href="/admin/panel"
                 className="rounded font-semibold text-right flex items-center justify-center gap-1"
                 style={{
                   padding: "10px 0",
                 }}
+                onClick={handleLogout}
               >
-                <IconAdjustmentsCog className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
-                Admin Panel
-              </Link>
+                <IconLogout className="h-[10] w-[10] text-neutral-500 dark:text-neutral-300" />{" "}
+                Log out
+              </button>
             </div>
           </div>
         )}
       </nav>
+      <TradingViewWidget />
     </header>
   );
 

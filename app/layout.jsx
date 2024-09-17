@@ -8,6 +8,7 @@ import Nav from "@component/navbarandfooter/Nav";
 import Link from "next/link";
 import { DataProvider } from "@component/context/DataProvider";
 import Provider from "@component/context/Provider";
+import Footer from "@component/navbarandfooter/Footer";
 
 export const metadata = {
   title: "Infinite firms",
@@ -24,14 +25,17 @@ const RootLayout = async ({ children }) => {
         <html lang="en">
           <body className="">
             <Navbar />
+            {/* <TradingViewWidget /> */}
             <main
               className="bg-gray-200"
               style={{
-                paddingTop: "60px",
+                paddingTop: "100px",
+                paddingBottom: "100px",
               }}
             >
               {children}
             </main>
+            <Footer />
             <ToastContainer />
           </body>
         </html>

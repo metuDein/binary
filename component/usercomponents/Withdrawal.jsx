@@ -5,7 +5,28 @@ import { useDataContext } from "@component/context/DataProvider";
 import { toast } from "react-toastify";
 
 const Withdrawal = () => {
-  const { currentUser, allTransactions } = useDataContext();
+  const {
+    currentUser,
+    allTransactions,
+    btcRate,
+    ethRate,
+    ltcRate,
+    xmrRate,
+    xrpRate,
+    zecRate,
+  } = useDataContext();
+
+  const { balances } = currentUser;
+  const { bitcoin, ethereum, litecoin, monero, ripple, zcash } = balances;
+  const totalCryptoBalance =
+    bitcoin * btcRate +
+    ethereum * ethRate +
+    litecoin * ltcRate +
+    monero * xmrRate +
+    ripple * xrpRate +
+    zcash * zecRate;
+
+  const [mining, setMining] = useState(totalCryptoBalance);
   const [key, setKey] = useState("Bitcoin");
   const [amount, setAmount] = useState(0);
   const [wallet, setWallet] = useState("");
@@ -15,6 +36,7 @@ const Withdrawal = () => {
   const [bankRoutingNumber, setBankRoutingNumber] = useState("");
   const [bankAccountName, setBankAccountName] = useState("");
   const [withdrawBal, setWithdrawaBal] = useState("");
+  const [withdrawFrom, setWithdrawFrom] = useState("");
 
   const tx = allTransactions?.filter(
     (tx) => tx.userId?._id === currentUser?._id
@@ -326,7 +348,7 @@ const Withdrawal = () => {
                   value={`bitcoin ${currentUser?.balances.mining}`}
                   key="2"
                 >
-                  Mining Profit ({currentUser?.balances.mining})
+                  Mining Profit $({mining.toFixed(2)})
                 </option>
               </select>
             </div>

@@ -1,21 +1,31 @@
+"use client";
 import React from "react";
+import TradingViewMiniChartWidget from "@component/tradingviewwidget/TradingViewMiniChartWidget";
+import { useDataContext } from "@component/context/DataProvider";
 
-const Dashboard = () => {
+const Dashboard = ({ userdata }) => {
+  const { currentUser, btcRate, ethRate, ltcRate, xmrRate, xrpRate, zecRate } =
+    useDataContext();
+
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div className="min-h-screen bg-gray-900 p-8 mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
         {/* Balance Overview Cards */}
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
-          <h3 className="text-xl font-semibold">Account Balance</h3>
-          <p className="text-3xl font-bold mt-4">$0.00</p>
+          <h3 className="text-xl font-semibold">Profit Balance</h3>
+          <p className="text-3xl font-bold mt-4">
+            ${currentUser?.balances?.profit}
+          </p>
         </div>
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
           <h3 className="text-xl font-semibold">Expected Mining</h3>
           <p className="text-3xl font-bold mt-4">$0.00</p>
         </div>
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
-          <h3 className="text-xl font-semibold">Bonus Balance</h3>
-          <p className="text-3xl font-bold mt-4">$0.00</p>
+          <h3 className="text-xl font-semibold">Deposit Balance</h3>
+          <p className="text-3xl font-bold mt-4">
+            ${currentUser?.balances?.deposit}
+          </p>
         </div>
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
           <h3 className="text-xl font-semibold">Total Mining</h3>
@@ -24,13 +34,30 @@ const Dashboard = () => {
       </div>
 
       {/* Trading Chart */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <div className="col-span-2 bg-gray-800 rounded-lg p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mt-6">
+        <div
+          className="col-span-2 bg-gray-800 rounded-lg p-6"
+          style={{
+            gridColumn: "span 2",
+            gridRow: "span 2",
+            gap: "18px",
+          }}
+        >
           <h3 className="text-white text-xl font-semibold mb-4">
             Trading Overview
           </h3>
           {/* Embed a trading chart widget here */}
-          <div className="bg-gray-700 rounded h-64"></div>
+          <div
+            className="bg-gray-700 rounded min-h-64 col-span-2"
+            style={{
+              gridColumn: "span 2",
+              gridRow: "span 2",
+              gap: "18px",
+              minHeight: "399px",
+            }}
+          >
+            <TradingViewMiniChartWidget />
+          </div>
         </div>
 
         {/* Live Crypto Prices */}
@@ -39,15 +66,27 @@ const Dashboard = () => {
           <ul className="mt-4 space-y-2">
             <li className="flex justify-between">
               <span>BTC</span>
-              <span>$26,000.00</span>
+              <span>${btcRate}</span>
             </li>
             <li className="flex justify-between">
               <span>ETH</span>
-              <span>$1,800.00</span>
+              <span>${ethRate}</span>
             </li>
             <li className="flex justify-between">
               <span>LTC</span>
-              <span>$90.00</span>
+              <span>${ltcRate}</span>
+            </li>
+            <li className="flex justify-between">
+              <span>XMR</span>
+              <span>${xmrRate}</span>
+            </li>
+            <li className="flex justify-between">
+              <span>XRP</span>
+              <span>${xrpRate}</span>
+            </li>
+            <li className="flex justify-between">
+              <span>zec</span>
+              <span>${zecRate}</span>
             </li>
             {/* Add more crypto as needed */}
           </ul>

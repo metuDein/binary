@@ -45,16 +45,20 @@ const Profile = () => {
 
   return (
     <main className="w-full min-h-screen">
-      <section className="max-w-5xl sm:max-w-xl mx-auto p-3 rounded-md flex flex-wrap gap-">
-        <h2
-          className="text-3xl font-mono max-w-5xl"
+      <section
+        className="max-w-5xl sm:max-w-xl mx-auto p-3 rounded-md flex flex-wrap "
+        style={{
+          paddingTop: "130px",
+        }}
+      >
+        {/* <h2
+          className="text-3xl font-mono max-w-5xl text-center"
           style={{
             color: "#5F5DB1",
-            padding: "0 40px",
           }}
         >
           Dashboard
-        </h2>
+        </h2> */}
         <Dashboard userData={userData} />
       </section>
       <section className="">

@@ -68,6 +68,15 @@ const MiningDeposit = () => {
   const [txAmount, setTxAmount] = useState(0);
   const [txHash, setTxHash] = useState("");
   const [earnings, setEarnings] = useState(0);
+  const [customUsd, setCustomUsd] = useState(0);
+  // const [customHash, setCustomHash] = useState(1);
+
+  const btcOneThs = 25;
+  const ethOneThs = 23;
+  const ltcOneThs = 30;
+  const xmrOneThs = 20;
+  const xrpOneThs = 25;
+  const zecOneThs = 31;
 
   useEffect(() => {
     async function getEarnings() {
@@ -114,65 +123,53 @@ const MiningDeposit = () => {
     return earningsPerDay;
   }
   function calculateEarningsInUSD(crypto, hashrate) {
-    const ratePerTh = cryptoRates[crypto];
-
-    if (!ratePerTh) {
-      throw new Error("Unsupported cryptocurrency");
-    }
-
-    // Fetch the latest conversion rates from CoinGecko
-    // const conversionRates = await fetchConversionRates();
-    let conversionRate;
-    switch (crypto) {
-      case "btc":
-        conversionRate = btcRate;
-        break;
-      case "eth":
-        conversionRate = ethRate;
-        break;
-      case "ltc":
-        conversionRate = ltcRate;
-        break;
-      case "xmr":
-        conversionRate = xmrRate;
-        break;
-      case "xrp":
-        conversionRate = xrpRate;
-        break;
-      case "zec":
-        conversionRate = zecRate;
-        break;
-
-      default:
-        break;
-    }
-
-    if (!conversionRate) {
-      throw new Error("Conversion rate not found for " + crypto);
-    }
-
-    // Calculate daily earnings in crypto
-    const earningsPerDayInCrypto = ratePerTh * hashrate;
-
-    // Convert to USD
-    const earningsInUSD = earningsPerDayInCrypto * conversionRate;
-
-    return earningsInUSD;
-  }
-
-  async function fetchConversionRates() {
-    const url = "https://api.coingecko.com/api/v3/simple/price";
-    const params = {
-      ids: "bitcoin,ethereum,litecoin,monero,ripple,zcash",
-      vs_currencies: "usd",
-    };
-
     try {
-      const response = await axios.get(url, { params });
-      return response.data;
+      const ratePerTh = cryptoRates[crypto];
+
+      if (!ratePerTh) {
+        throw new Error("Unsupported cryptocurrency");
+      }
+
+      // Fetch the latest conversion rates from CoinGecko
+      // const conversionRates = await fetchConversionRates();
+      let conversionRate;
+      switch (crypto) {
+        case "btc":
+          conversionRate = btcRate;
+          break;
+        case "eth":
+          conversionRate = ethRate;
+          break;
+        case "ltc":
+          conversionRate = ltcRate;
+          break;
+        case "xmr":
+          conversionRate = xmrRate;
+          break;
+        case "xrp":
+          conversionRate = xrpRate;
+          break;
+        case "zec":
+          conversionRate = zecRate;
+          break;
+
+        default:
+          break;
+      }
+
+      if (!conversionRate) {
+        throw new Error("Conversion rate not found for " + crypto);
+      }
+
+      // Calculate daily earnings in crypto
+      const earningsPerDayInCrypto = ratePerTh * hashrate;
+
+      // Convert to USD
+      const earningsInUSD = earningsPerDayInCrypto * conversionRate;
+
+      return earningsInUSD;
     } catch (error) {
-      console.error("Error fetching conversion rates:", error);
-      throw error;
+      console.log(error.message);
     }
   }
 
@@ -206,7 +203,7 @@ const MiningDeposit = () => {
             earning: earnings,
           }),
         });
-        toast.success("Deposit request successfull waiting for approval");
+        toast.success("Deposit request successful waiting for approval");
 
         // setConfirm(null);
         // setTxAmount(0);
@@ -385,6 +382,7 @@ const MiningDeposit = () => {
             crypto={"btc"}
           />
         ))}
+        <CustomDetails crypto={"btc"} planName={"Custom plan"} />
       </div>
     );
   };
@@ -401,6 +399,7 @@ const MiningDeposit = () => {
             hashValue={plan.hashValue}
           />
         ))}
+        <CustomDetails crypto={"eth"} planName={"Custom plan"} />
       </div>
     );
   };
@@ -418,6 +417,7 @@ const MiningDeposit = () => {
             crypto={"ltc"}
           />
         ))}
+        <CustomDetails crypto={"ltc"} planName={"Custom plan"} />
       </div>
     );
   };
@@ -435,6 +435,7 @@ const MiningDeposit = () => {
             crypto={"xmr"}
           />
         ))}
+        <CustomDetails crypto={"xmr"} planName={"Custom plan"} />
       </div>
     );
   };
@@ -452,6 +453,7 @@ const MiningDeposit = () => {
             crypto={"xrp"}
           />
         ))}
+        <CustomDetails crypto={"xrp"} planName={"Custom plan"} />
       </div>
     );
   };
@@ -469,6 +471,7 @@ const MiningDeposit = () => {
             crypto={"zec"}
           />
         ))}
+        <CustomDetails crypto={"zec"} planName={"Custom plan"} />
       </div>
     );
   };
@@ -504,6 +507,70 @@ const MiningDeposit = () => {
               setCryptocoin(crypto);
               setHashRate(hashValue);
               paymentRequest(usdPrice);
+            }}
+            className="text-black font-semibold px-10 py-3 mb-5 bg-neutral-200 rounded mt-10 hover:bg-neutral-300 text-center"
+          >
+            Purchase
+          </button>
+        </div>
+        {/* <TradingViewMiniWidget symbol={chartSymbol} /> */}
+      </div>
+    );
+  };
+  const handleCustomPrice = (crypto) => {
+    if (crypto === "btc") {
+      setCustomUsd(hashRate * btcOneThs);
+    } else if (crypto === "eth") {
+      setCustomUsd(hashRate * ethOneThs);
+    } else if (crypto === "ltc") {
+      setCustomUsd(hashRate * ltcOneThs);
+    } else if (crypto === "xmr") {
+      setCustomUsd(hashRate * xmrOneThs);
+    } else if (crypto === "xrp") {
+      setCustomUsd(hashRate * xrpOneThs);
+    } else if (crypto === "zec") {
+      setCustomUsd(hashRate * zecOneThs);
+    }
+  };
+
+  const CustomDetails = ({ planName, icon, usdPrice, hashValue, crypto }) => {
+    useEffect(() => {
+      handleCustomPrice(crypto);
+    }, [hashRate]);
+    return (
+      <div className="bg-neutral-900 w-[300px] min-h-[220px] p-1 rounded flex flex-col pb-6">
+        <div className="w-full flex flex-col items-center justify-between">
+          {icon}
+          <p className="text-neutral-500 text-xl font-semibold mt-4 text-center">
+            {planName}
+            <p>Minimum is $200</p>
+          </p>
+          <p className="text-white mt-10 font-bold text-4xl">
+            ${customUsd} <span className="text-xl"> /month</span>
+          </p>
+          <p className=" mt-4 font-bold text-3xl">
+            <input
+              type="number"
+              value={hashRate}
+              onChange={(e) => setHashRate(e.target.value)}
+              className="w-[100px] bg-neutral-800 text-black  rounded "
+              style={{
+                width: "150px",
+              }}
+              min={200}
+            />
+          </p>
+
+          <p className="text-neutral-500 mt-4 font-serif">
+            SHA-256 Mining Algorithm <br />
+            Maintenance Fees Apply
+          </p>
+
+          <button
+            onClick={() => {
+              setCryptocoin(crypto);
+              setHashRate(hashValue);
+              paymentRequest(customUsd);
             }}
             className="text-black font-semibold px-10 py-3 mb-5 bg-neutral-200 rounded mt-10 hover:bg-neutral-300 text-center"
           >
@@ -688,21 +755,21 @@ const MiningDeposit = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchBtcRate = async () => {
-      try {
-        const response = await fetch(
-          "https://api.coindesk.com/v1/bpi/currentprice/BTC.json"
-        );
-        const data = await response.json();
-        setBtcRate(data.bpi.USD.rate_float);
-      } catch (error) {
-        console.error("Error fetching BTC rate:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchBtcRate = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://api.coindesk.com/v1/bpi/currentprice/BTC.json"
+  //       );
+  //       const data = await response.json();
+  //       setBtcRate(data.bpi.USD.rate_float);
+  //     } catch (error) {
+  //       console.error("Error fetching BTC rate:", error);
+  //     }
+  //   };
 
-    fetchBtcRate();
-  }, []);
+  //   fetchBtcRate();
+  // }, []);
 
   const handleCalculate = (amount) => {
     if (btcRate && amount) {

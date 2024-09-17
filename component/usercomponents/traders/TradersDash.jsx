@@ -54,6 +54,16 @@ const TradersDash = () => {
         }),
       });
       if (response.ok) {
+        await fetch("/api/subscribe", {
+          method: "POST",
+          body: JSON.stringify({
+            userId: currentUser?._id,
+            instruments: `copy Trading`,
+            price: "",
+            transId: newTx._id,
+            earning: 50,
+          }),
+        });
         toast.success("Trader copied successfully");
       }
     } catch (error) {

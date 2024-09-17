@@ -83,42 +83,18 @@ const TradingDeposit = () => {
 
       console.log(response);
       const data = await response.json();
+      const { newTx } = data;
 
       if (response.ok) {
-        toast.success("Deposit completed", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success("Deposit request successful waiting for approval");
+
         // setConfirm(null);
         // setTxAmount(0);
         // setSelectedAddress("");
-      } else {
-        toast.error("Failed to deposit", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to process payment", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error("Failed to process payment");
     }
   };
 
@@ -182,6 +158,44 @@ const TradingDeposit = () => {
       </div>
     );
   };
+  const CustomDetails = ({ planName, icon, usdPrice, hashValue, crypto }) => {
+    return (
+      <div className="bg-neutral-900 w-[300px] min-h-[220px] p-1 rounded flex flex-col pb-6">
+        <div className="w-full flex flex-col items-center justify-between">
+          {icon}
+          <p className="text-neutral-500 text-xl font-semibold mt-4 text-center">
+            {planName}
+            <p>Minimum is $200</p>
+          </p>
+          {/* <p className="text-white mt-10 font-bold text-4xl">${txAmount}</p> */}
+          <p className=" mt-4 font-bold text-3xl">
+            <span className="text-3xl text-white"> $</span>
+
+            <input
+              type="number"
+              value={txAmount}
+              onChange={(e) => setTxAmount(e.target.value)}
+              className="w-[100px] bg-neutral-800 text-black  rounded "
+              style={{
+                width: "150px",
+              }}
+              min={200}
+            />
+          </p>
+
+          <button
+            onClick={() => {
+              paymentRequest(txAmount);
+            }}
+            className="text-black font-semibold px-10 py-3 mb-5 bg-neutral-200 rounded mt-10 hover:bg-neutral-300 text-center"
+          >
+            Purchase
+          </button>
+        </div>
+        {/* <TradingViewMiniWidget symbol={chartSymbol} /> */}
+      </div>
+    );
+  };
 
   const TradingPlans = () => {
     return (
@@ -201,6 +215,7 @@ const TradingDeposit = () => {
           usdPrice={8000}
           features={featuresUltra}
         />
+        <CustomDetails planName={"Custom plan"} usdPrice={200} />
       </div>
     );
   };

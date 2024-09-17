@@ -19,7 +19,6 @@ const subscritionSchema = new Schema({
     },
     price: {
         type: Number,
-        required: true
     },
     earning: Number,
     status: {

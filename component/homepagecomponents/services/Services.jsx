@@ -54,6 +54,16 @@ export function Services() {
 
   return (
     <div className="w-full h-full pt-5">
+      <h2
+        className="text-3xl font-semibold text-center"
+        style={{
+          marginBottom: "2rem",
+          marginTop: "2rem",
+        }}
+      >
+        {" "}
+        Our Services
+      </h2>
       <Carousel items={cards} />
     </div>
   );

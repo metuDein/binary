@@ -14,8 +14,11 @@ import {
   IconAdjustmentsCog,
 } from "@tabler/icons-react";
 import { signOut } from "next-auth/react";
+import { useDataContext } from "@component/context/DataProvider";
 
 const SideBar = () => {
+  const { currentUser } = useDataContext();
+  const { roles } = currentUser;
   const [admin, setAdmin] = useState(true);
 
   const handleLogout = async () => {
@@ -180,7 +183,7 @@ const SideBar = () => {
     <div className="items-start md:h-screen absolute mt-7 overflow-scroll">
       <FloatingDock
         mobileClassName="translate-y-20" // only for demo, remove for production
-        items={admin ? links2 : links}
+        items={roles?.Admin === 5150 ? links2 : links}
       />
     </div>
   );

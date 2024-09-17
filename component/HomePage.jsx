@@ -20,10 +20,6 @@ const HomePage = () => {
         <AboutUs />
       </section>
       <section className="min-h-screen">
-        <h2 className="text-center text-black text-4xl font-sans font-bold mb-3 underline-offset-0">
-          {" "}
-          The perfect plans just for you{" "}
-        </h2>
         <Services />
       </section>
       <section className="min-h-screen w-full">
