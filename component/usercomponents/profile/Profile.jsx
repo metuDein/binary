@@ -9,13 +9,16 @@ import { ExpandableCardDemo } from "./components/TransactionTab";
 import { getServerSession } from "next-auth";
 import { useDataContext } from "@component/context/DataProvider";
 import Dashboard from "./components/Dashboard";
+import Loader from "@component/loader/Loader";
 
 const Profile = () => {
-  const { currentUser, currentUserTransactions, allTransactions } =
+  const { currentUser, currentUserTransactions, allTransactions, appLoading } =
     useDataContext();
   const tx = allTransactions.filter(
     (tx) => tx.userId?._id === currentUser?._id
   );
+
+  if (appLoading) return <Loader />;
 
   return (
     <main className="w-full min-h-screen">

@@ -108,25 +108,24 @@ export const DataProvider = ({ children }) => {
       console.error("Error fetching crypto rates:", error);
     }
   };
-
-  useEffect(() => {
+  const getAppData = () => {
     getUser();
     getCopiers();
     getTraders();
     getAllUsers();
     getTransactions();
     getSubscriptions();
-    setAppLoading(false);
-
-    setInterval(() => {
-      getUser();
-      getCopiers();
-      getTraders();
-      getAllUsers();
-      getTransactions();
-      getSubscriptions();
+    fetchCryptoRates();
+    setTimeout(() => {
       setAppLoading(false);
-      fetchCryptoRates();
+    }, 2000);
+  };
+
+  useEffect(() => {
+    getAppData();
+    // Update the app data every 3 minutes (180000 milliseconds) to avoid hitting the API rate limit
+    setInterval(() => {
+      getAppData();
     }, 180000);
   }, []);
 
