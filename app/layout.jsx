@@ -11,9 +11,37 @@ import Provider from "@component/context/Provider";
 import Footer from "@component/navbarandfooter/Footer";
 
 export const metadata = {
-  title: "Infinite firms",
+  title: "Horizonmarketcapital",
   description:
     "Join the future of finance with our trusted crypto trading and mining investment platform. Maximize your returns with expert strategies, real-time insights, and secure transactions. Start earning today with the power of cryptocurrency!RooLayOut",
+  openGraph: {
+    type: "website",
+    url: "https://www.horizonmarketcapital.com",
+    title: "Horizonmarketcapital",
+    description:
+      "Join the future of finance with our trusted crypto trading and mining investment platform.",
+    images: [
+      {
+        url: "/assets/logo/horizon.png",
+        width: 800,
+        height: 600,
+        alt: "horizon",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Horizonmarketcapital",
+    description:
+      "Join the future of finance with our trusted crypto trading and mining investment platform.",
+    images: ["/apple-touch-icon.png"],
+  },
+  icons: {
+    icon: ["/apple-touch-icon.png?.v=2"],
+    apple: ["/apple-touch-icon.png?.v=1"],
+    shortcut: ["/apple-touch-icon.png"],
+  },
+  manifest: "/site.webmanifest",
 };
 
 const RootLayout = async ({ children }) => {
