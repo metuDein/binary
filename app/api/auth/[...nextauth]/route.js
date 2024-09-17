@@ -32,8 +32,6 @@ const handler = NextAuth({
 
                         id: user._id,
                         email: user.email,
-                        roles: user.roles
-
                     };
                 }
 
