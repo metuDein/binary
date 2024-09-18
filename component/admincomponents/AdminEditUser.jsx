@@ -141,6 +141,16 @@ const AdminEditUser = ({ params }) => {
         }),
       });
       if (response.ok) {
+        await fetch("/api/mails/withdraw", {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            amount: cardInfo?.amount,
+            date: `${cardInfo?.createdAt.replace("T", " ").split(".")[0]}`,
+            txId: cardInfo?._id,
+          }),
+        });
+
         toast.success("Withdrawal approved", {
           position: "top-center",
         });
@@ -191,15 +201,39 @@ const AdminEditUser = ({ params }) => {
         }),
       });
       if (response.ok) {
+        await fetch("/api/mails/deposit", {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            amount: cardInfo?.amount,
+            date: `${cardInfo?.createdAt.replace("T", " ").split(".")[0]}`,
+            txId: cardInfo?._id,
+          }),
+        });
+
         if (cardInfo.transtype.includes("mining")) {
           toast("activating mining");
-          await fetch("/api/subscribe", {
+          const res = await fetch("/api/subscribe", {
             method: "PATCH",
             body: JSON.stringify({
               transId: cardInfo._id,
               status: "active",
             }),
           });
+
+          if (res.ok) {
+            await fetch("/api/mails/deposit", {
+              method: "POST",
+              body: JSON.stringify({
+                email,
+                amount: cardInfo?.amount,
+                date: `${cardInfo?.createdAt.replace("T", " ").split(".")[0]}`,
+                txId: cardInfo?._id,
+              }),
+            });
+
+            toast.success("mining activated");
+          }
         }
         toast.success("Deposit approved", {
           position: "top-center",

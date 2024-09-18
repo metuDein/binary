@@ -48,9 +48,6 @@ export function Register() {
       if (response.ok) {
         await fetch("/api/mails/signup", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({
             email,
           }),

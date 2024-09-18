@@ -1,14 +1,12 @@
+"use client";
 import Profile from "@component/usercomponents/profile/Profile";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { useDataContext } from "@component/context/DataProvider";
+import Loader from "@component/loader/Loader";
 
-const page = async () => {
-  const session = await getServerSession();
+const page = () => {
+  const { appLoading } = useDataContext();
 
-  if (!session) {
-    redirect("/user-login");
-  }
-
+  if (appLoading) return <Loader />;
   return <Profile />;
 };
 export default page;

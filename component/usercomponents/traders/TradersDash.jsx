@@ -62,6 +62,7 @@ const TradersDash = () => {
             price: "",
             transId: newTx._id,
             earning: 50,
+            status: "active",
           }),
         });
         toast.success("Trader copied successfully");

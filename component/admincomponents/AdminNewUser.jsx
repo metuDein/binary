@@ -65,7 +65,7 @@ const AdminNewUser = () => {
         }}
       >
         <Image
-          src={"/assets/logo/logo.png"}
+          src={"/assets/logo/horizon.png"}
           alt="logo"
           width={80}
           height={80}

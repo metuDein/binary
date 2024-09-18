@@ -329,7 +329,7 @@ const AdminPanel = () => {
             />
             <ToolsCard
               text={"Send an email"}
-              href={"/admin/panel/newtrader"}
+              href={"/admin/panel/newemail"}
               icon={
                 <FontAwesomeIcon
                   icon={faEnvelopeOpenText}

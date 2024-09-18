@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { useDataContext } from "@component/context/DataProvider";
 import Loader from "@component/loader/Loader";
 
