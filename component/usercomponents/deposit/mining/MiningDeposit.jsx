@@ -652,7 +652,7 @@ const MiningDeposit = () => {
               Select a deposit method
             </h2>
             <div
-              className="flex flex-wrap items-center h-full mt-10 gap-2 mx-auto"
+              className="flex flex-wrap items-center h-full mt-10 gap-2 mx-auto justify-center"
               style={{}}
             >
               <div
