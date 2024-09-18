@@ -7,18 +7,32 @@ const Dashboard = () => {
   const { currentUser, btcRate, ethRate, ltcRate, xmrRate, xrpRate, zecRate } =
     useDataContext();
 
+  const { bitcoin, ethereum, litecoin, monero, ripple, zcash } =
+    currentUser?.balances;
+  const totalCryptoBalance =
+    bitcoin * btcRate +
+    ethereum * ethRate +
+    litecoin * ltcRate +
+    monero * xmrRate +
+    ripple * xrpRate +
+    zcash * zecRate;
+
   return (
     <div className="min-h-screen bg-gray-900 p-8 mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
         {/* Balance Overview Cards */}
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
-          <h3 className="text-xl font-semibold">Profit Balance</h3>
+          <h3 className="text-xl font-semibold">Trading Profit</h3>
           <p className="text-3xl font-bold mt-4">
-            ${currentUser && currentUser?.balances?.profit}
+            ${currentUser && currentUser?.balances?.trading}
           </p>
         </div>
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
-          <h3 className="text-xl font-semibold">Expected Mining</h3>
+          <h3 className="text-xl font-semibold">Mining Profit</h3>
+          <p className="text-3xl font-bold mt-4">{totalCryptoBalance}</p>
+        </div>
+        <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
+          <h3 className="text-xl font-semibold">Withdrawals</h3>
           <p className="text-3xl font-bold mt-4">$0.00</p>
         </div>
         <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
@@ -26,10 +40,6 @@ const Dashboard = () => {
           <p className="text-3xl font-bold mt-4">
             ${currentUser && currentUser?.balances?.deposit}
           </p>
-        </div>
-        <div className="col-span-4 lg:col-span-1 bg-gray-800 rounded-lg p-6 text-white">
-          <h3 className="text-xl font-semibold">Total Mining</h3>
-          <p className="text-3xl font-bold mt-4">$0.00</p>
         </div>
       </div>
 
