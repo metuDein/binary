@@ -68,7 +68,7 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/traders");
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       if (response.ok) {
         setAllTraders(data.traders || []);
