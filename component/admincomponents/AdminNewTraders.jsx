@@ -1,10 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import CountrySelect from "@component/authcomponents/components/CountrySelect";
+import Image from "next/image";
 
 const AdminNewTraders = () => {
   const [fullname, setFullname] = useState("");
+  const [image, setImage] = useState({});
+
   const [email, setEmail] = useState("");
   const [traderType, setTraderType] = useState({
     gold: false,
@@ -48,6 +51,7 @@ const AdminNewTraders = () => {
           fullname,
           email,
           traderType,
+          image,
           roi: {
             thirtydays: thirtyDay,
           },
@@ -70,9 +74,7 @@ const AdminNewTraders = () => {
       setFullname("");
       setEmail("");
       setTraderType({ gold: false, silver: false, bronze: false });
-      setSevenDay(0);
       setThirtyDay(0);
-      setOneYear(0);
       setRating(4);
       setLocation("");
       setCopiers(100);
@@ -81,6 +83,50 @@ const AdminNewTraders = () => {
       toast.error(error.message);
     }
   };
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "usegwhpg");
+    const file = e.target.files[0];
+
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+    }
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/dxrxrbo8c/image/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const result = await res.json();
+      console.log(result);
+
+      setImage({
+        secure_url: result?.secure_url,
+        public_id: result?.public_id,
+      });
+      toast("image uploaded");
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-center",
+      });
+    }
+  };
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <section className="pt-10 mx-auto max-w-xl md:max-w-4xl min-h-screen pb-10">
@@ -96,33 +142,74 @@ const AdminNewTraders = () => {
               padding: "20px",
             }}
           >
-            <label htmlFor="userImage">
-              <span
-                className=" rounded-full block mx-auto"
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "50%",
-                  backgroundImage: `url(https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg)`,
-                  backgroundSize: "contain",
-                  backgroundPosition: "",
-                  borderRadius: "50%",
-                  position: "relative",
-                  // background: "rgba(0, 0, 0, 0.6)",
-                  cursor: "pointer",
+            <label
+              htmlFor="userImage"
+              className="flex items-center"
+              style={{
+                borderRadius: "50%",
+              }}
+            >
+              <input
+                id="userImage"
+                type="file"
+                accept="image/*"
+                onChange={uploadImage}
+                className="hidden"
+              />
 
-                  breakAfter: {
-                    content: "",
-                    width: "200px",
-                    height: "200px",
-                    background: "rgba(0,0,0,0.6)",
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                    zIndex: "100",
-                  },
-                }}
-              ></span>
+              {image?.secure_url && (
+                <Image
+                  src={image?.secure_url}
+                  alt="Profile picture"
+                  width={500}
+                  height={500}
+                  className="w-full mx-auto"
+                  style={{
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    width: `${windowWidth <= 370 ? "150px" : "200px"}`,
+                    height: `${windowWidth <= 370 ? "150px" : "200px"}`,
+                    border: "2px solid #fff",
+                    cursor: "pointer",
+                  }}
+                />
+              )}
+
+              {!image?.secure_url && (
+                // <span
+                //   id="userImage"
+                //   className=" rounded-full block mx-auto"
+                //   style={{
+                //     width: `${windowWidth <= 300 ? "150" : "200"}`,
+                //     height: "200px",
+                //     borderRadius: "50%",
+                //     backgroundImage: `url(https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg)`,
+                //     backgroundSize: "contain",
+                //     backgroundPosition: "",
+                //     borderRadius: "50%",
+                //     position: "relative",
+                //     // background: "rgba(0, 0, 0, 0.6)",
+                //     cursor: "pointer",
+                //   }}
+                // ></span>
+                <Image
+                  src={
+                    "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg"
+                  }
+                  alt="Profile picture"
+                  width={500}
+                  height={500}
+                  className="w-full mx-auto"
+                  style={{
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    width: `${windowWidth <= 370 ? "150px" : "200px"}`,
+                    height: `${windowWidth <= 370 ? "150px" : "200px"}`,
+                    border: "2px solid #fff",
+                    cursor: "pointer",
+                  }}
+                />
+              )}
             </label>
 
             <div className="flex flex-col">

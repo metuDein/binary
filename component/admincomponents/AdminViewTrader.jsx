@@ -89,10 +89,9 @@ const AdminViewTrader = ({ params }) => {
           userId: params.id,
         }),
       });
-      if (!response.ok) {
-        throw new Error("Failed to delete trader");
+      if (response.ok) {
+        toast.success("Trader deleted successfully!");
       }
-      toast.success("Trader deleted successfully!");
 
       // Redirect to traders list page after deleting
       // router.push("/admin/traders");
@@ -374,8 +373,8 @@ const AdminViewTrader = ({ params }) => {
                   >
                     Save
                   </button>
-                  <button
-                    className="bg-gray-100 text-red- w-1/2 mx-auto mt-4 "
+                  <article
+                    className="bg-gray-100 text-red- w-1/2 mx-auto mt-4 text-center cursor-pointer"
                     style={{
                       padding: "10px",
                       marginLeft: "auto",
@@ -387,7 +386,7 @@ const AdminViewTrader = ({ params }) => {
                     onClick={handleDelete}
                   >
                     Delete
-                  </button>
+                  </article>
                 </div>
               </div>
             </form>

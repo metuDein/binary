@@ -28,7 +28,12 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/auth/getusers");
       const data = await response.json();
-      setAllUsers(data.users);
+
+      if (response.ok) {
+        setAllUsers(data.users || []);
+      } else {
+        setAllUsers([]);
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -63,7 +68,11 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/traders");
       const data = await response.json();
-      setAllTraders(data.traders || []);
+      console.log(data);
+
+      if (response.ok) {
+        setAllTraders(data.traders || []);
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -72,7 +81,9 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/subscribe");
       const data = await response.json();
-      setAllSubscription(data.subscriptions || []);
+      if (response.ok) {
+        setAllSubscription(data.subscriptions || []);
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -81,7 +92,9 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/testimonials");
       const data = await response.json();
-      setTestimonials(data.testimonials || []);
+      if (response.ok) {
+        setTestimonials(data.testimonials || []);
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -90,7 +103,9 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/copytrader");
       const data = await response.json();
-      setAllCopiers(data.copyTradings || []);
+      if (response.ok) {
+        setAllCopiers(data.copyTradings || []);
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -102,7 +117,6 @@ export const DataProvider = ({ children }) => {
       );
       const data = await response.json();
 
-      // Set the rates for each cryptocurrency in their respective state
       setBtcRate(data.bitcoin.usd);
       setEthRate(data.ethereum.usd);
       setLtcRate(data.litecoin.usd);

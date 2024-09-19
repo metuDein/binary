@@ -10,7 +10,6 @@ import StarRating from "@component/usercomponents/profile/components/StarRating"
 // import CountryFlag from "@component/admincomponents/components/CountryFlag";
 
 export function ExpandableCardDemo({ tx }) {
-  const { allUsers, allTraders } = useDataContext();
   const [active, setActive] = useState(tx);
   const ref = useRef(null);
   const id = useId();
@@ -85,7 +84,7 @@ export function ExpandableCardDemo({ tx }) {
                   priority
                   width={1000}
                   height={1000}
-                  src={"/assets/images/cashoutbtc.jpg"}
+                  src={active?.image?.secure_url}
                   alt={active._id}
                   className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
                 />
@@ -115,11 +114,7 @@ export function ExpandableCardDemo({ tx }) {
                       </span>
                       <br />
                       <span className="float-left">
-                        <CountryFlag
-                          countryName={capitalizeFirstLetters(
-                            active.traderLocation
-                          )}
-                        />
+                        <CountryFlag countryName={active.traderLocation} />
                       </span>
                       <br />
                       <StarRating rating={active.traderRating} />
@@ -204,7 +199,7 @@ export function ExpandableCardDemo({ tx }) {
               <Image
                 width={100}
                 height={100}
-                src={"/assets/images/cashoutbtc.jpg"}
+                src={tx?.image?.secure_url}
                 alt={tx?._id}
                 className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
               />

@@ -60,7 +60,7 @@ const TradersDash = () => {
             userId: currentUser?._id,
             instruments: `copy Trading`,
             price: "",
-            transId: newTx._id,
+            transId: "copy trading",
             earning: 50,
             status: "active",
           }),
@@ -81,7 +81,14 @@ const TradersDash = () => {
         }),
       });
       if (response.ok) {
-        toast.success("Trader delete successfully");
+        await fetch("/api/subscribe", {
+          method: "PATCH",
+          body: JSON.stringify({
+            transId: "copy trading",
+            status: "inactive",
+          }),
+        });
+        toast.success("you have stopped copying this trader");
       }
     } catch (error) {
       toast.error(`${error.message}`);
@@ -107,8 +114,8 @@ const TradersDash = () => {
                     <Image
                       width={100}
                       height={100}
-                      src={`/assets/images/tradersample.jpg`}
-                      alt={"test div"}
+                      src={item?.traderId?.image?.secure_url}
+                      alt={item?._id}
                       className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
                     />
                     <div className="flex flex-col p-2">
@@ -151,7 +158,7 @@ const TradersDash = () => {
                       <Image
                         width={100}
                         height={100}
-                        src={`/assets/images/tradersample.jpg`}
+                        src={item?.image?.secure_url}
                         alt={"test div"}
                         className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
                       />
@@ -184,7 +191,7 @@ const TradersDash = () => {
                   priority
                   width={1000}
                   height={1000}
-                  src={`/assets/images/tradersample.jpg`}
+                  src={cardInfo?.image?.secure_url}
                   alt={cardInfo._id}
                   className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
                 />
