@@ -2,6 +2,10 @@ import { model, models, Schema } from "mongoose";
 
 
 const userSchema = new Schema({
+    image: {
+        public_id: String,
+        secure_url: String
+    },
     email: {
         type: String,
         required: true,

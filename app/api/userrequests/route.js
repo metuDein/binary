@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export const PATCH = async (req, res) => {
     await dbConn()
     try {
-        const { id, username, password, wallet, phoneNumber } = await req.json()
+        const { id, username, password, wallet, phoneNumber, image } = await req.json()
         const user = await User.findOne({ _id: id }).exec()
         console.log(user);
 
@@ -18,10 +18,11 @@ export const PATCH = async (req, res) => {
         if (password) user.password = password
         if (wallet) user.wallet = wallet
         if (phoneNumber) user.phoneNumber = phoneNumber
+        if (image) user.image = image
 
-        const result = await user.save()
+        await user.save()
 
-        return NextResponse.json({ message: 'user updated' }, { status: 200, body: result })
+        return NextResponse.json({ message: 'user updated' }, { status: 200 })
 
 
     } catch (error) {

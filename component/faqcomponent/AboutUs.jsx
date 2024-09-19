@@ -1,4 +1,5 @@
 import React from "react";
+import WhyChooseUs from "@component/homepagecomponents/Choose/WhyChooseUs";
 
 const AboutUs = () => {
   return (
@@ -10,7 +11,7 @@ const AboutUs = () => {
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto py-20 px-5 md:px-10 lg:px-20 text-white">
-        <h1 className="text-5xl font-bold text-center mb-10">
+        <h1 className="text-3xl font-bold text-center mb-10">
           About Horizonmarketcapital
         </h1>
         <p className="text-xl text-center max-w-3xl mx-auto leading-relaxed mb-8">
@@ -22,7 +23,7 @@ const AboutUs = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="bg-white bg-opacity-10 p-8 rounded-lg shadow-lg">
+          <div className=" bg-opacity-10 p-8 rounded-lg shadow-lg">
             <h2 className="text-3xl font-semibold mb-4">Our Vision</h2>
             <p className="text-lg leading-relaxed">
               At Horizonmarketcapital, we envision a world where everyone can
@@ -33,7 +34,7 @@ const AboutUs = () => {
             </p>
           </div>
 
-          <div className="bg-white bg-opacity-10 p-8 rounded-lg shadow-lg">
+          <div className=" bg-opacity-10 p-8 rounded-lg shadow-lg">
             <h2 className="text-3xl font-semibold mb-4">Our Mission</h2>
             <p className="text-lg leading-relaxed">
               Our mission is to provide reliable, high-quality services that
@@ -49,33 +50,7 @@ const AboutUs = () => {
           <h2 className="text-3xl font-semibold text-center mb-8">
             Why Choose Us?
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg text-center">
-              <h3 className="text-2xl font-semibold mb-4">Experienced Team</h3>
-              <p className="leading-relaxed">
-                Our team consists of experts in trading, blockchain, and
-                financial technologies, ensuring you're in safe hands.
-              </p>
-            </div>
-
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg text-center">
-              <h3 className="text-2xl font-semibold mb-4">
-                Cutting-Edge Technology
-              </h3>
-              <p className="leading-relaxed">
-                We leverage the latest technology to deliver a seamless
-                experience in copy trading and cloud mining.
-              </p>
-            </div>
-
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg text-center">
-              <h3 className="text-2xl font-semibold mb-4">Customer Support</h3>
-              <p className="leading-relaxed">
-                Our dedicated support team is available 24/7 to help you with
-                any inquiries or challenges.
-              </p>
-            </div>
-          </div>
+          <WhyChooseUs />
         </div>
       </div>
     </div>

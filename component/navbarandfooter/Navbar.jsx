@@ -148,9 +148,23 @@ const Navbar = () => {
             )}
             {session && (
               <div className="hidden md:flex space-x-4">
-                <Link href={"/user/profile"}>{currentUser?.firstname}</Link>
-                <button>
-                  <FontAwesomeIcon icon={faBell} />
+                <button className="flex items-center justify-center gap-1">
+                  <Link href={"/user/profile"}>{currentUser?.firstname}</Link>
+                  {/* //user image */}
+                  <div>
+                    <Image
+                      src={currentUser?.image?.secure_url || ""}
+                      width={60}
+                      height={60}
+                      style={{
+                        borderRadius: "50%",
+                        width: "40px",
+                        height: "40px",
+                        objectFit: "cover",
+                        border: "2px solid #fff",
+                      }}
+                    />
+                  </div>
                 </button>
               </div>
             )}
@@ -158,8 +172,21 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <div className="md:hidden flex justify-center items-center gap-2">
               {!!session && (
-                <button>
-                  <FontAwesomeIcon icon={faBell} />
+                <button onClick={toggleMenu}>
+                  <div>
+                    <Image
+                      src={currentUser?.image?.secure_url || ""}
+                      width={60}
+                      height={60}
+                      style={{
+                        borderRadius: "50%",
+                        width: "40px",
+                        height: "40px",
+                        objectFit: "cover",
+                        border: "2px solid #fff",
+                      }}
+                    />
+                  </div>
                 </button>
               )}
 

@@ -6,9 +6,9 @@ import { NextResponse } from 'next/server'
 export const POST = async (req) => {
     await dbConn()
     try {
-        const { fullname, email, traderType, roi, location, rating, copiers, joined, desc } = await req.json()
+        const { fullname, email, traderType, roi, location, rating, copiers, joined, desc, image } = await req.json()
 
-        const newTrader = new Trader({ traderName: fullname, traderEmail: email, traderType, traderRoi: roi, traderLocation: location, traderRating: rating, traderCopier: copiers, joined: joined, traderDescription: desc })
+        const newTrader = new Trader({ traderName: fullname, traderEmail: email, traderType, traderRoi: roi, traderLocation: location, traderRating: rating, traderCopier: copiers, joined: joined, traderDescription: desc, image })
         await newTrader.save()
 
         return NextResponse.json({ newTrader }, { status: 201 })
@@ -22,9 +22,9 @@ export const POST = async (req) => {
 export const PATCH = async (req) => {
     await dbConn()
     try {
-        const { userId, fullname, email, traderType, roi, location, rating, copiers, joined, desc } = await req.json()
+        const { userId, fullname, email, traderType, roi, location, rating, copiers, joined, desc, image } = await req.json()
 
-        const updatedTrader = await Trader.findByIdAndUpdate(userId, { traderName: fullname, traderEmail: email, traderType, traderRoi: roi, traderLocation: location, traderRating: rating, traderCopier: copiers, joined: joined, traderDescription: desc }, { new: true })
+        const updatedTrader = await Trader.findByIdAndUpdate(userId, { traderName: fullname, traderEmail: email, traderType, traderRoi: roi, traderLocation: location, traderRating: rating, traderCopier: copiers, joined: joined, traderDescription: desc, image }, { new: true })
         if (!updatedTrader) return NextResponse.json({ message: 'Trader not found' }, { status: 404 })
 
 

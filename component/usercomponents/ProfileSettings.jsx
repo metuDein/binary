@@ -1,7 +1,7 @@
 "use client";
 import { IconEdit } from "@tabler/icons-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { compare } from "bcrypt";
 import { useDataContext } from "@component/context/DataProvider";
 import { toast } from "react-toastify";
@@ -9,6 +9,8 @@ import CountryFlag from "@component/admincomponents/components/CountryFlag";
 
 const ProfileSettings = () => {
   const { currentUser } = useDataContext();
+  const [image, setImage] = useState(currentUser?.image);
+  const [imgUpdate, setImgUpdate] = useState({});
   const [editEmail, seteditEmail] = useState(false);
   const [editPassword, seteditPassword] = useState(false);
   const [editUsername, seteditUsername] = useState(false);
@@ -38,6 +40,7 @@ const ProfileSettings = () => {
   const [selectedImageI, setSelectedImageI] = useState(null);
   const [selectedImageII, setSelectedImageII] = useState(null);
   const [selectedImageIII, setSelectedImageIII] = useState(null);
+  const [displayImg, setDisplayImg] = useState("");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -46,6 +49,7 @@ const ProfileSettings = () => {
       setSelectedImageI(imageUrl);
     }
   };
+
   const handleImageChangeII = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -94,6 +98,7 @@ const ProfileSettings = () => {
           id: currentUser._id,
           username: newUsername,
           password: newPassword || currentUser?.password,
+          image: imgUpdate || image,
           wallet: {
             bitcoin: btc,
             ethereum: eth,
@@ -121,6 +126,56 @@ const ProfileSettings = () => {
       });
     }
   };
+
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "usegwhpg");
+    const file = e.target.files[0];
+
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setDisplayImg(imageUrl);
+    }
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/dxrxrbo8c/image/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const result = await res.json();
+      console.log(result);
+      setImgUpdate({
+        secure_url: result?.secure_url,
+        public_id: result?.public_id,
+      });
+      setImage({
+        secure_url: result?.secure_url,
+        public_id: result?.public_id,
+      });
+      toast("image uploaded");
+    } catch (error) {
+      toast.error("Error uploading image", {
+        position: "top-center",
+      });
+    }
+  };
+
+  //responsive styling
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <section className="pt-10 mx-auto max-w-xl md:max-w-4xl min-h-screen pb-10">
@@ -168,33 +223,57 @@ const ProfileSettings = () => {
                   padding: "20px",
                 }}
               >
-                <label htmlFor="userImage" className="flex items-center">
-                  <span
-                    className=" rounded-full block mx-auto"
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      borderRadius: "50%",
-                      backgroundImage: `url(https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg)`,
-                      backgroundSize: "contain",
-                      backgroundPosition: "",
-                      borderRadius: "50%",
-                      position: "relative",
-                      // background: "rgba(0, 0, 0, 0.6)",
-                      cursor: "pointer",
+                <label
+                  htmlFor="userImage"
+                  className="flex items-center"
+                  style={{
+                    borderRadius: "50%",
+                  }}
+                >
+                  <input
+                    id="userImage"
+                    type="file"
+                    accept="image/*"
+                    onChange={uploadImage}
+                    className="hidden"
+                  />
 
-                      breakAfter: {
-                        content: "",
-                        width: "200px",
+                  {image?.secure_url && (
+                    <Image
+                      src={image?.secure_url}
+                      alt="Profile picture"
+                      width={500}
+                      height={500}
+                      className="w-full mx-auto"
+                      style={{
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        width: `${windowWidth <= 370 ? "150px" : "200px"}`,
+                        height: `${windowWidth <= 370 ? "150px" : "200px"}`,
+                        border: "2px solid #fff",
+                        cursor: "pointer",
+                      }}
+                    />
+                  )}
+
+                  {!image && !displayImg && (
+                    <span
+                      id="userImage"
+                      className=" rounded-full block mx-auto"
+                      style={{
+                        width: `${windowWidth <= 300 ? "150" : "200"}`,
                         height: "200px",
-                        background: "rgba(0,0,0,0.6)",
-                        position: "absolute",
-                        top: "0",
-                        left: "0",
-                        zIndex: "100",
-                      },
-                    }}
-                  ></span>
+                        borderRadius: "50%",
+                        backgroundImage: `url(https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg)`,
+                        backgroundSize: "contain",
+                        backgroundPosition: "",
+                        borderRadius: "50%",
+                        position: "relative",
+                        // background: "rgba(0, 0, 0, 0.6)",
+                        cursor: "pointer",
+                      }}
+                    ></span>
+                  )}
                   <CountryFlag countryName={currentUser?.location} />
                 </label>
 
@@ -209,6 +288,19 @@ const ProfileSettings = () => {
                     }}
                   >
                     <span>{`${currentUser?.firstname} ${currentUser?.lastname}`}</span>
+                  </p>
+                </div>
+                <div className="flex flex-col">
+                  <p className="font-semibold text-white"> Phone number: </p>
+                  <p
+                    className="bg-gray-200 flex justify-between items-center"
+                    style={{
+                      padding: "5px 10px",
+                      borderRadius: "5px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <span>{currentUser?.phoneNumber} </span>
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -365,8 +457,8 @@ const ProfileSettings = () => {
                   >
                     Save
                   </button>
-                  <button
-                    className="bg-gray-100 text-red- w-1/2 mx-auto mt-4 "
+                  <article
+                    className="bg-gray-100 text-red- w-1/2 mx-auto mt-4 text-center cursor-pointer"
                     style={{
                       padding: "10px",
                       marginLeft: "auto",
@@ -378,7 +470,7 @@ const ProfileSettings = () => {
                     onClick={handleCancel}
                   >
                     cancel
-                  </button>
+                  </article>
                 </div>
               </div>
             </form>
@@ -694,8 +786,8 @@ const ProfileSettings = () => {
                   >
                     Save
                   </button>
-                  <button
-                    className="bg-gray-100 text-red- w-1/2 mx-auto mt-4 "
+                  <article
+                    className="bg-gray-100 text-red- w-1/2 mx-auto mt-4 text-center cursor-pointer"
                     style={{
                       padding: "10px",
                       marginLeft: "auto",
@@ -707,7 +799,7 @@ const ProfileSettings = () => {
                     onClick={handleCancel}
                   >
                     cancel
-                  </button>
+                  </article>
                 </div>
               </div>
             </form>

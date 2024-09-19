@@ -38,13 +38,6 @@ const Profile = () => {
         </h2> */}
         <Dashboard />
       </section>
-      <section className="">
-        <h3 className="text-xl font-bold text-center text-black underline my-3">
-          {" "}
-          Recent Transactions{" "}
-        </h3>
-        <ExpandableCardDemo tx={tx || []} />
-      </section>
     </main>
   );
 };

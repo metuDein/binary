@@ -7,6 +7,7 @@ const DataContext = createContext({});
 export const DataProvider = ({ children }) => {
   const { data: session } = useSession();
 
+  const [keepAlert, setKeepAlert] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState();
   const [appLoading, setAppLoading] = useState(true);
@@ -14,6 +15,7 @@ export const DataProvider = ({ children }) => {
   const [allTraders, setAllTraders] = useState([]);
   const [allCopiers, setAllCopiers] = useState([]);
   const [allSubscription, setAllSubscription] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
   const [currentUserTransactions, setCurrentUserTransactions] = useState([]);
   const [btcRate, setBtcRate] = useState(null);
   const [ethRate, setEthRate] = useState(null);
@@ -26,7 +28,6 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/auth/getusers");
       const data = await response.json();
-      console.log(data);
       setAllUsers(data.users);
     } catch (error) {
       console.error(error.message);
@@ -36,7 +37,6 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/auth/getcurrentuser");
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         setCurrentUser(data.user);
       } else {
@@ -50,7 +50,6 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/deposits");
       const data = await response.json();
-      console.log(data);
       setAllTransactions(data.tx || []);
       const userTx = allTransactions.filter(
         (item) => item.userId._id === currentUser._id
@@ -64,7 +63,6 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/traders");
       const data = await response.json();
-      console.log(data);
       setAllTraders(data.traders || []);
     } catch (error) {
       console.error(error.message);
@@ -74,8 +72,16 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/subscribe");
       const data = await response.json();
-      console.log(data);
       setAllSubscription(data.subscriptions || []);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+  const getTestimonials = async () => {
+    try {
+      const response = await fetch("/api/testimonials");
+      const data = await response.json();
+      setTestimonials(data.testimonials || []);
     } catch (error) {
       console.error(error.message);
     }
@@ -84,7 +90,6 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/copytrader");
       const data = await response.json();
-      console.log(data);
       setAllCopiers(data.copyTradings || []);
     } catch (error) {
       console.error(error.message);
@@ -113,6 +118,7 @@ export const DataProvider = ({ children }) => {
     getCopiers();
     getTraders();
     getAllUsers();
+    getTestimonials();
     getTransactions();
     getSubscriptions();
     fetchCryptoRates();
@@ -148,6 +154,9 @@ export const DataProvider = ({ children }) => {
         xrpRate,
         zecRate,
         getUser,
+        testimonials,
+        setKeepAlert,
+        keepAlert,
       }}
     >
       {children}

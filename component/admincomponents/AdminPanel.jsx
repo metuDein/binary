@@ -341,7 +341,7 @@ const AdminPanel = () => {
             />
             <ToolsCard
               text={"Add Testimonial"}
-              href={"/admin/panel/newtrader"}
+              href={"/admin/panel/newtestimonial"}
               icon={
                 <FontAwesomeIcon
                   icon={faCommentMedical}

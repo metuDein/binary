@@ -6,9 +6,9 @@ const tradersSchema = new Schema({
         type: String,
         required: true
     },
-    tradeImage: {
-        type: String,
-        // required: true
+    image: {
+        public_id: String,
+        secure_url: String
     },
     traderEmail: {
         type: String,
