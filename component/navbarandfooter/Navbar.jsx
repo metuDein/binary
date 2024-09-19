@@ -141,7 +141,7 @@ const Navbar = () => {
                 <Link href="/">Home</Link>
                 <Link href="/faq/aboutus">About</Link>
                 <Link href="/faq/services">Services</Link>
-                <Link href="/faq/contact">Contact</Link>
+                <Link href="/faq/contactus">Contact</Link>
                 <Link href="/user-register">Register</Link>
                 <Link href="/user-login">Login</Link>
               </div>
@@ -235,6 +235,16 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Services
+              </Link>
+              <Link
+                href="/faq/contactus"
+                className="rounded font-semibold text-right flex items-center justify-center gap-1"
+                style={{
+                  padding: "10px 0",
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                Contact Us
               </Link>
               <Link
                 href="/user-register"
