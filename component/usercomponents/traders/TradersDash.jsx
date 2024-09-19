@@ -42,7 +42,7 @@ const TradersDash = () => {
       return toast.error("this trader is not available to you");
     }
     if (currentUser?.balances?.deposit < 500) {
-      toast.error("Make you have a deposit of at least $500");
+      toast.error("Make sure you have a deposit of at least $500");
       return;
     }
     try {
