@@ -41,7 +41,7 @@ const HomePage = () => {
       <section className="pt-4 pb-6 border-t-black border-solid ">
         <h2 className="text-center pt-3 pb-6 text-black text-4xl font-sans font-bold mb-3 underline-offset-0">
           {" "}
-          Why Invest With Infinite Firms?{" "}
+          Why Invest With Horizonmarketcapital?{" "}
         </h2>
         <WhyChooseUs />
       </section>

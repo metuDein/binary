@@ -266,7 +266,12 @@ const page = () => {
     return (
       <div>
         {isVisible && (
-          <div className="popup bg-white text-gray-800 p-4 rounded shadow-lg mt-5 md:mt-0 w-1/2">
+          <div
+            className="popup bg-white text-gray-800 p-4 rounded shadow-lg mt-5 md:mt-0 w-1/2 absolute"
+            style={{
+              zIndex: "1000",
+            }}
+          >
             <p>{`${dataArray[currentIndex].name} has just ${dataArray[currentIndex].type} ${dataArray[currentIndex].amount} USD from ${dataArray[currentIndex].country}`}</p>
             <button
               onClick={handleStopAlerts}
