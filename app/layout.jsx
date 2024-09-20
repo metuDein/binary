@@ -13,7 +13,13 @@ import Footer from "@component/navbarandfooter/Footer";
 export const metadata = {
   title: "Horizonmarketcapital",
   description:
-    "Join the future of finance with our trusted crypto trading and mining investment platform. Maximize your returns with expert strategies, real-time insights, and secure transactions. Start earning today with the power of cryptocurrency!RooLayOut",
+    "Join the future of finance with our trusted crypto trading and mining investment platform.",
+  alternates: {
+    canonical: "https://www.horizonmarketcapital.com",
+    languages: {
+      "en-US": "/en-US",
+    },
+  },
   openGraph: {
     type: "website",
     url: "https://www.horizonmarketcapital.com",
