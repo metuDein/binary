@@ -9,6 +9,7 @@ const Loader = () => {
       <Image
         src="/assets/images/loader.gif"
         alt="Loading..."
+        unoptimized
         width={300}
         height={300}
       />

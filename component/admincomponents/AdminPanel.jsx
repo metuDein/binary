@@ -22,10 +22,12 @@ import {
   faUserPlus,
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 const AdminPanel = () => {
   const router = useRouter();
-  const { allTransactions, allUsers, allTraders } = useDataContext();
+  const { allTransactions, allUsers, allTraders, allSubscription, kycs } =
+    useDataContext();
   const [activeTab, setActiveTab] = useState(0);
 
   const handleTabClick = (index) => {
@@ -271,19 +273,27 @@ const AdminPanel = () => {
         >
           Traders
         </button>
-        <button
+        {/* <button
           className={`px-4 py-2 text-white ${
             activeTab === 3 ? "bg-blue-600" : "bg-gray-700"
           } rounded-r-lg focus:outline-none hover:bg-blue-500`}
           onClick={() => handleTabClick(3)}
         >
           Requests{" "}
-        </button>
+        </button> */}
         <button
           className={`px-4 py-2 text-white ${
             activeTab === 4 ? "bg-blue-600" : "bg-gray-700"
           } rounded-r-lg focus:outline-none hover:bg-blue-500`}
           onClick={() => handleTabClick(4)}
+        >
+          Kyc{" "}
+        </button>
+        <button
+          className={`px-4 py-2 text-white ${
+            activeTab === 5 ? "bg-blue-600" : "bg-gray-700"
+          } rounded-r-lg focus:outline-none hover:bg-blue-500`}
+          onClick={() => handleTabClick(5)}
         >
           Subscriptions{" "}
         </button>
@@ -391,12 +401,74 @@ const AdminPanel = () => {
             ))}
           </div>
         )}
-        {activeTab === 3 && (
+        {/* {activeTab === 3 && (
           <div>
             <ExpandableCardDemo tx={allTransactions} />
           </div>
-        )}
-        {activeTab === 4 && <div> Subscriptions </div>}
+        )} */}
+
+        {activeTab === 4 &&
+          kycs.map((item, id) => (
+            <>
+              <div
+                className="flex items-center  p-2 rounded justify-between text-white max-w-4xl mx-auto"
+                key={id}
+              >
+                <div className="flex items-center ">
+                  <Image
+                    width={100}
+                    height={100}
+                    src={`/assets/images/id-card.png`}
+                    alt={"test div"}
+                    className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
+                  />
+                  <div className="flex flex-col p-2">
+                    <p> {item?.userId?.firstname}</p>
+                    <span>{item?.userId?.email}</span>
+                  </div>
+                </div>
+                <Link
+                  href={`/admin/panel/kyc/${item?._id}`}
+                  className="p-2 bg-black text-white rounded hidden md:block text-center"
+                  style={{ padding: "5px 20px" }}
+                >
+                  {" "}
+                  view{" "}
+                </Link>
+              </div>
+            </>
+          ))}
+        {activeTab === 5 &&
+          allSubscription.map((item, id) => (
+            <>
+              <div
+                className="flex items-center  p-2 rounded justify-between text-white max-w-4xl mx-auto"
+                key={id}
+              >
+                <div className="flex items-center ">
+                  <Image
+                    width={100}
+                    height={100}
+                    src={`/assets/images/id-card.png`}
+                    alt={"test div"}
+                    className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
+                  />
+                  <div className="flex flex-col p-2">
+                    <p> {item?.userId?.firstname}</p>
+                    <span>{item?.instruments}</span>
+                  </div>
+                </div>
+                <Link
+                  href={`/admin/panel/subs/${item?._id}`}
+                  className="p-2 bg-black text-white rounded hidden md:block text-center"
+                  style={{ padding: "5px 20px" }}
+                >
+                  {" "}
+                  view{" "}
+                </Link>
+              </div>
+            </>
+          ))}
       </div>
     </section>
   );

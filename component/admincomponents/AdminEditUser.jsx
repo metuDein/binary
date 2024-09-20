@@ -1056,11 +1056,11 @@ const AdminEditUser = ({ params }) => {
                     <Image
                       width={100}
                       height={100}
-                      src={`/assets/images/${
-                        item.transtype.includes("deposit")
-                          ? "deposit.jpg"
-                          : "withdrawal.jpeg"
-                      }`}
+                      src={
+                        item?.image?.secure_url ||
+                        `/assets/images/deposit.jpg
+                        `
+                      }
                       alt={"test div"}
                       className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
                     />
@@ -1092,10 +1092,8 @@ const AdminEditUser = ({ params }) => {
                 priority
                 width={1000}
                 height={1000}
-                src={`/assets/images/${
-                  cardInfo.transtype.includes("deposit")
-                    ? "deposit.jpg"
-                    : "withdrawal.jpeg"
+                src={`${
+                  cardInfo?.image?.secure_url || "/assets/images/deposit.jpg"
                 }`}
                 alt={cardInfo._id}
                 className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"

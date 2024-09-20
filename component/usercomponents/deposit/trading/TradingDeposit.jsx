@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import CountdownTimer from "../mining/component/Counter";
 import Image from "next/image";
 import { useDataContext } from "@component/context/DataProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFile, faFileCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 const TradingDeposit = () => {
   const { currentUser } = useDataContext();
@@ -13,6 +15,7 @@ const TradingDeposit = () => {
   const [btcRate, setBtcRate] = useState(null);
   const [txAmount, setTxAmount] = useState(0);
   const [txHash, setTxHash] = useState("");
+  const [image, setImage] = useState({});
 
   const featuresLite = [
     "No fees",
@@ -78,6 +81,7 @@ const TradingDeposit = () => {
           amount: txAmount,
           address: selectedAddress,
           txhash: txHash,
+          image,
         }),
       });
 
@@ -86,6 +90,12 @@ const TradingDeposit = () => {
       const { newTx } = data;
 
       if (response.ok) {
+        await fetch("/api/mails/adminalert", {
+          method: "POST",
+          body: JSON.stringify({
+            body: `${currentUser?.firstname} ${currentUser?.lastname} has made a deposit of ${txAmount} USD please head over to the admin panel to review the transaction hash and approve the transaction`,
+          }),
+        });
         toast.success("Deposit request successful waiting for approval");
 
         // setConfirm(null);
@@ -290,6 +300,35 @@ const TradingDeposit = () => {
       </div>
     );
   };
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "usegwhpg");
+    const file = e.target.files[0];
+
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/dxrxrbo8c/image/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const result = await res.json();
+      console.log(result);
+
+      setImage({
+        secure_url: result?.secure_url,
+        public_id: result?.public_id,
+      });
+      toast("image uploaded");
+    } catch (error) {
+      toast.error("Error uploading image", {
+        position: "top-center",
+      });
+    }
+  };
 
   const purchase = () => {
     switch (confirm) {
@@ -354,7 +393,7 @@ const TradingDeposit = () => {
       case "confirm payment":
         return (
           <div
-            className="max-w-[400px] bg-neutral-900 pt-10"
+            className="max-w-2xl bg-neutral-900 pt-10 mx-auto"
             style={
               {
                 // padding: "20px",
@@ -365,11 +404,45 @@ const TradingDeposit = () => {
           >
             <form
               onSubmit={handleCompleted}
-              className="flex flex-col p-2 w-full"
+              className="flex flex-col p-2 w-full "
             >
               <h2 className="text-xl font-bold text-white text-center">
                 Confirm transaction
               </h2>
+              <label htmlFor="tximg" className="text-white font-bold mt-2">
+                {!image?.secure_url && (
+                  <div className="flex flex-col items-center justify-center cursor-pointer">
+                    <FontAwesomeIcon
+                      icon={faFileCirclePlus}
+                      className="text-white text-6xl"
+                    />
+                    <p>click to upload proof of transaction </p>
+                  </div>
+                )}
+                {image?.secure_url && (
+                  <div
+                    className="w-[300px] h-[300px] overflow-hidden rounded-lg"
+                    style={{
+                      width: "300px",
+                      height: "200px",
+                    }}
+                  >
+                    <Image
+                      src={image?.secure_url}
+                      alt="Transaction Image"
+                      width={70}
+                      height={70}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <input
+                  type="file"
+                  id="tximg"
+                  className="hidden"
+                  onChange={uploadImage}
+                />
+              </label>
               <label
                 htmlFor="txhash"
                 className="font-semibold text-white pt-10"

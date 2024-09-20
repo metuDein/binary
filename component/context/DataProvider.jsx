@@ -17,6 +17,7 @@ export const DataProvider = ({ children }) => {
   const [allSubscription, setAllSubscription] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [currentUserTransactions, setCurrentUserTransactions] = useState([]);
+  const [kycs, setKycs] = useState([]);
   const [btcRate, setBtcRate] = useState(null);
   const [ethRate, setEthRate] = useState(null);
   const [ltcRate, setLtcRate] = useState(null);
@@ -81,6 +82,7 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/subscribe");
       const data = await response.json();
+      console.log(data);
       if (response.ok) {
         setAllSubscription(data.subscriptions || []);
       }
@@ -110,6 +112,19 @@ export const DataProvider = ({ children }) => {
       console.error(error.message);
     }
   };
+  const getKycs = async () => {
+    try {
+      const response = await fetch("/api/kyc");
+      const data = await response.json();
+      console.log(data);
+
+      if (response.ok) {
+        setKycs(data.kycs || []);
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   const fetchCryptoRates = async () => {
     try {
       const response = await fetch(
@@ -129,6 +144,7 @@ export const DataProvider = ({ children }) => {
   };
   const getAppData = () => {
     getUser();
+    getKycs();
     getCopiers();
     getTraders();
     getAllUsers();
@@ -161,6 +177,7 @@ export const DataProvider = ({ children }) => {
         allTraders,
         allCopiers,
         allSubscription,
+        kycs,
         btcRate,
         ethRate,
         ltcRate,

@@ -24,9 +24,9 @@ export const GET = async (req) => {
 export const POST = async (req) => {
     await dbConn()
     try {
-        const { userId, txType, amount, address, txhash, hashRate } = await req.json()
+        const { userId, txType, amount, address, txhash, hashRate, image } = await req.json()
         console.log({ txType, amount, address, txhash })
-        const newTx = await Transactions({ userId, transtype: txType, amount: amount, addressUsed: address, txhash: txhash, hashrate: hashRate })
+        const newTx = await Transactions({ userId, transtype: txType, amount: amount, addressUsed: address, txhash: txhash, hashrate: hashRate, image })
 
         await newTx.save()
         if (!newTx) return NextResponse.json({ message: 'add tx failed' }, { status: 500 })

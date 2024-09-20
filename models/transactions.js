@@ -2,6 +2,10 @@ import { Schema, model, models } from "mongoose";
 
 
 const transactionsSchema = new Schema({
+    image: {
+        public_id: String,
+        secure_url: String,
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'

@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
     await dbConn()
     try {
-        const subscriptions = await Subscription.find().populate('transId')
+        const subscriptions = await Subscription.find().populate(['transId', 'userId'])
         if (!subscriptions) return NextResponse.json({ message: 'no subscriptions yet' }, { status: 204 })
 
         return NextResponse.json({ subscriptions }, { status: 200 })
@@ -20,8 +20,8 @@ export const GET = async () => {
 export const POST = async (req) => {
     await dbConn()
     try {
-        const { userId, instruments, price, duration, transId, earning } = await req.json()
-        const subscription = new Subscription({ userId, instruments, price, duration, transId, earning })
+        const { userId, instruments, price, duration, transId, earning, status } = await req.json()
+        const subscription = new Subscription({ userId, instruments, price, duration, transId, earning, status })
         await subscription.save()
         return NextResponse.json({ message: 'subscription created successfully', subscription }, { status: 201 })
     } catch (error) {
@@ -33,10 +33,11 @@ export const POST = async (req) => {
 export const PATCH = async (req) => {
     await dbConn()
     try {
-        const { transId, status } = await req.json()
+        const { transId, status, earning } = await req.json()
 
         const subscription = await Subscription.findOne({ transId }).exec()
-        subscription.status = status
+        if (status) subscription.status = status
+        if (earning) subscription.earning = earning
         await subscription.save()
         return NextResponse.json({ message: 'subscription updated successfully' }, { status: 200 })
     } catch (error) {
