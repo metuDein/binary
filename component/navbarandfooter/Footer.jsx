@@ -53,7 +53,7 @@ const Footer = () => {
               <a href="#">Email: info@Horizonmarketcapital.com</a>
             </p>
             <p>
-              <a href="#">Address: 123 Main St, City, State, Zip</a>
+              <a href="#">Address: 400 Midland Ave, staten Island, NY, 10306</a>
             </p>
           </div>
           <div>
