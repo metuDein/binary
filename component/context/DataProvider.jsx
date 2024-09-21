@@ -107,6 +107,7 @@ export const DataProvider = ({ children }) => {
       const data = await response.json();
       if (response.ok) {
         setAllCopiers(data.copyTradings || []);
+        // console.log(data);
       }
     } catch (error) {
       console.error(error.message);
@@ -185,6 +186,7 @@ export const DataProvider = ({ children }) => {
         xrpRate,
         zecRate,
         getUser,
+        getCopiers,
         testimonials,
         setKeepAlert,
         keepAlert,
