@@ -119,7 +119,8 @@ const AdminEditSub = ({ params }) => {
           className="block text-gray-700 font-semibold mb-2"
           htmlFor="earning"
         >
-          Earning crypto
+          Earning (for mining enter in the crypto format for trading enter in
+          USD ):
         </label>
         <input
           type="number"
