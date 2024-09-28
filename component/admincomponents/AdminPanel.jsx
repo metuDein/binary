@@ -124,7 +124,7 @@ const AdminPanel = () => {
     );
   };
 
-  const UsersCards = ({ email, firstname, deposit, id }) => {
+  const UsersCards = ({ email, firstname, username, deposit, id }) => {
     return (
       <div
         onClick={() => router.push(`/admin/panel/user/${id}`)}
@@ -148,6 +148,7 @@ const AdminPanel = () => {
         <div className="w-full">
           {/* <p className="text-sm font-normal text-left">{email}</p> */}
           <p className="text-sm font-normal text-center">{firstname}</p>
+          <p className="text-sm font-normal text-center">{username}</p>
           {/* <p className="text-sm font-normal">${deposit}</p> */}
         </div>
       </div>
@@ -385,6 +386,7 @@ const AdminPanel = () => {
                 firstname={user.firstname}
                 deposit={user.balances.deposit}
                 id={user._id}
+                username={user.username}
               />
             ))}
           </div>

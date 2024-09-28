@@ -33,12 +33,8 @@ const AdminEditUser = ({ params }) => {
 
   const [bonusBalance, setBonusbalance] = useState(user?.balances?.bonus);
   const [ProfitBalance, setProfitbalance] = useState(user?.balances?.profit);
-  const [miningBalance, setMiningbalance] = useState(
-    user?.balances?.expectedMining
-  );
-  const [tradingBalance, setTradingbalance] = useState(
-    user?.balances?.expectedTrading
-  );
+  const [miningBalance, setMiningbalance] = useState(user?.balances?.mining);
+  const [tradingBalance, setTradingbalance] = useState(user?.balances?.trading);
 
   const [cardInfo, setCardInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -97,8 +93,8 @@ const AdminEditUser = ({ params }) => {
             zcash: zecBalance,
             bonus: bonusBalance,
             profit: ProfitBalance,
-            expectedMining: miningBalance,
-            expectedTrading: tradingBalance,
+            mining: miningBalance,
+            trading: tradingBalance,
           },
         }),
       });
