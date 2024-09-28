@@ -59,7 +59,7 @@ export const DataProvider = ({ children }) => {
     try {
       const response = await fetch("/api/datarefresh");
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       if (response.ok) {
         setAllUsers(data.users || []);
@@ -80,55 +80,6 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  // const getTransactions = async () => {
-  //   try {
-  //     const response = await fetch("/api/deposits");
-  //     const data = await response.json();
-  //     setAllTransactions(data.tx || []);
-  //     const userTx = allTransactions.filter(
-  //       (item) => item.userId._id === currentUser._id
-  //     );
-  //     setCurrentUserTransactions(userTx);
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // };
-  // const getTraders = async () => {
-  //   try {
-  //     const response = await fetch("/api/traders");
-  //     const data = await response.json();
-  //     // console.log(data);
-
-  //     if (response.ok) {
-  //       setAllTraders(data.traders || []);
-  //     }
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // };
-  // const getSubscriptions = async () => {
-  //   try {
-  //     const response = await fetch("/api/subscribe");
-  //     const data = await response.json();
-  //     // console.log(data);
-  //     if (response.ok) {
-  //       setAllSubscription(data.subscriptions || []);
-  //     }
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // };
-  // const getTestimonials = async () => {
-  //   try {
-  //     const response = await fetch("/api/testimonials");
-  //     const data = await response.json();
-  //     if (response.ok) {
-  //       setTestimonials(data.testimonials || []);
-  //     }
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // };
   const getCopiers = async () => {
     try {
       const response = await fetch("/api/copytrader");
@@ -141,19 +92,7 @@ export const DataProvider = ({ children }) => {
       console.error(error.message);
     }
   };
-  // const getKycs = async () => {
-  //   try {
-  //     const response = await fetch("/api/kyc");
-  //     const data = await response.json();
-  //     // console.log(data);
 
-  //     if (response.ok) {
-  //       setKycs(data.kycs || []);
-  //     }
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // };
   const fetchCryptoRates = async () => {
     try {
       const response = await fetch(

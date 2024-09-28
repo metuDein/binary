@@ -29,6 +29,7 @@ export const GET = async () => {
                 "xrp Mining": "ripple",
                 "zec Mining": "zcash",
                 "copy Trading": "trading", // example if you have trading too
+                // Note: Deposit balance is intentionally omitted
             };
 
             // Find the respective balance key for the given instrument
@@ -46,10 +47,17 @@ export const GET = async () => {
 
         for (const user of allUsers) {
             const { balances } = user;
+
+            // Keep the original deposit balance
+            const originalDepositBalance = balances.deposit;
+
             // Update the balances based on the active subscriptions of the user
             activesub.forEach((el) => {
                 updateBalanceBasedOnInstrument(balances, el);
             });
+
+            // Ensure deposit balance remains unchanged
+            balances.deposit = originalDepositBalance;
 
             // Save the updated user balances
             await user.save();
