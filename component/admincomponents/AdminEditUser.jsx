@@ -31,7 +31,7 @@ const AdminEditUser = ({ params }) => {
   const [xrpBalance, setXrpbalance] = useState(user?.balances?.ripple);
   const [zecBalance, setZecbalance] = useState(user?.balances?.zcash);
 
-  const [bonusBalance, setBonusbalance] = useState(user?.balances?.bonus);
+  const [depositBalance, setdepositbalance] = useState(user?.balances?.deposit);
   const [ProfitBalance, setProfitbalance] = useState(user?.balances?.profit);
   const [miningBalance, setMiningbalance] = useState(user?.balances?.mining);
   const [tradingBalance, setTradingbalance] = useState(user?.balances?.trading);
@@ -91,7 +91,7 @@ const AdminEditUser = ({ params }) => {
             monero: xmrBalance,
             ripple: xrpBalance,
             zcash: zecBalance,
-            bonus: bonusBalance,
+            deposit: depositBalance,
             profit: ProfitBalance,
             mining: miningBalance,
             trading: tradingBalance,
@@ -580,7 +580,7 @@ const AdminEditUser = ({ params }) => {
                   {/* <p className="font-semibold text-white">User Balances</p> */}
 
                   <>
-                    <p className="font-semibold text-white">Bonus: </p>
+                    <p className="font-semibold text-white">Deposit: </p>
                     <p
                       className="bg-gray-200 flex justify-between items-center"
                       style={{
@@ -589,7 +589,7 @@ const AdminEditUser = ({ params }) => {
                         marginTop: "10px",
                       }}
                     >
-                      <span>{bonusBalance}</span>
+                      <span>{depositBalance}</span>
                     </p>
                   </>
                 </div>
@@ -958,22 +958,22 @@ const AdminEditUser = ({ params }) => {
 
                   <>
                     <label
-                      htmlFor="bonus"
+                      htmlFor="deposit"
                       className="font-semibold text-white"
                       style={{
                         marginBottom: "5px",
                       }}
                     >
-                      Bonus:
+                      Deposit:
                     </label>
                     <input
                       type="text"
-                      id="bonus"
-                      name="bonus"
-                      placeholder="bonus"
+                      id="deposit"
+                      name="deposit"
+                      placeholder="deposit"
                       className="block w-full px-3 py-2 rounded-md text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                      value={bonusBalance}
-                      onChange={(e) => setBonusbalance(e.target.value)}
+                      value={depositBalance}
+                      onChange={(e) => setdepositbalance(e.target.value)}
                     />
                   </>
                 </div>
@@ -1027,7 +1027,7 @@ const AdminEditUser = ({ params }) => {
                 </div>
               </div>
               <button
-                className="bg-gray-100 text-black w-1/2 mx-auto mt-4 "
+                className="bg-gray-100 text-black w-1/2 mx-auto mt-4 active:bg-white"
                 style={{
                   padding: "10px",
                   marginLeft: "auto",
