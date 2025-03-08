@@ -18,7 +18,7 @@ const ContactUs = () => {
       const response = await fetch("/api/mails/custom", {
         method: "POST",
         body: JSON.stringify({
-          email: `maxmetadein@gmail.com`,
+          email: `horizonmarketcapital@gmail.com`,
           title,
           subject,
           body,
